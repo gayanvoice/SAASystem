@@ -11,11 +11,4 @@ public class SuiteModel
     public DateTime ContractFrom { get; set; }
     public DateTime ContractTo { get; set; }
     public int MaximumStay { get; set; }
-    public double Size { get; set; }
-    public bool IsShortTermAt { get; set; }
-    public bool IsAmneties { get; set; }
-    public bool IsFurnish { get; set; }
-    public bool IsReference { get; set; }
-    public bool IsBills { get; set; }
-    public bool IsBroadband { get; set; }
 }
