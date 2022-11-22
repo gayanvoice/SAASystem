@@ -54,10 +54,20 @@ namespace SAASystem.Context
             object param = new { address = address };
             return _mySqlHelper.SelectAll<UserModel>(query, param);
         }
-        public int Update(int userId, string username)
+        public int Update(int userId, string username, string email, string phoneNo, string surname, string givenName, string address)
         {
-            string query = "UPDATE user SET username = @username WHERE user_id IN (@user_id)";
-            object param = new { user_id = userId, username = username };
+            string query = "UPDATE user SET username = @username, email = @email, phone_no = @phone_no, surname = @surname, " +
+                "given_name = @given_name, address = @address WHERE user_id IN (@user_id)";
+            object param = new 
+            {
+                user_id = userId,
+                username = username,
+                email = email,
+                phone_no = phoneNo,
+                surname = surname,
+                given_name = givenName,
+                address = address
+            };
             return _mySqlHelper.Update(query, param);
         }
     }
