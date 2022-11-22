@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SAASystem.Helper
+namespace SAASystem.Context
 {
     public interface IUserContext
     {

@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SAASystem.Helper;
+using SAASystem.Context;
 using SAASystem.Models;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SAASystem.Controllers
 {
@@ -14,16 +11,20 @@ namespace SAASystem.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IUserContext _userContext;
+        private readonly ITenantContext _tenantContext;
 
-        public HomeController(ILogger<HomeController> logger, IUserContext userContext)
+        public HomeController(IUserContext userContext,
+            ITenantContext tenantContext)
         {
-            _logger = logger;
             _userContext = userContext;
+            _tenantContext = tenantContext;
         }
 
         public IActionResult Index()
         {
             IEnumerable<UserModel> userModel =_userContext.SelectAll();
+            int status = _tenantContext.Insert(1);
+            IEnumerable<TenantModel> tenantModels = _tenantContext.SelectAll();
             return View();
         }
 
