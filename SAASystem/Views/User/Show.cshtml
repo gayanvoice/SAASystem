@@ -1,0 +1,70 @@
+﻿@{
+ViewData["Title"] = "Apartment - Show Page";
+}
+@model SAASystem.Models.View.UserViewModel.View;
+
+
+    <header>
+        <div class="py-2 border-bottom">
+            <div class="container d-flex flex-wrap justify-content-center">
+                <div class="col-12 col-lg-auto mb-lg-0 me-lg-auto" role="search">
+                    <a asp-action="Index" asp-controller="User"  class="btn btn-primary">Back</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<div class="container py-2" id="icon-grid">
+    <h2 class="pb-2 border-bottom">User @Model.UserModel.Username</h2>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-2">
+        <div class="col d-flex align-items-start">
+             <div>
+                <h5 class="fw-bold mb-0 fs-5">User Id</h5>
+                <p class="fs-6">@Model.UserModel.UserId</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div>
+                <h5 class="fw-bold mb-0 fs-5">Username</h5>
+                <p class="fs-6">@Model.UserModel.Username</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div>
+                <h5 class="fw-bold mb-0 fs-5">Email</h5>
+                <p class="fs-6">@Model.UserModel.Email</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div>
+                <h5 class="fw-bold mb-0 fs-5">Phone No</h5>
+                <p class="fs-6">@Model.UserModel.PhoneNo</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div>
+                <h5 class="fw-bold mb-0 fs-5">Surname</h5>
+                <p class="fs-6">@Model.UserModel.Surname</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div>
+                <h5 class="fw-bold mb-0 fs-5">Given Name</h5>
+                <p class="fs-6">@Model.UserModel.GivenName</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <div>
+                <h5 class="fw-bold mb-0 fs-5">Address</h5>
+                <p class="fs-6">@Model.UserModel.Address</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+           <div>
+                <h5 class="fw-bold mb-0 fs-5">Last Login</h5>
+                <p class="fs-6">@Model.UserModel.LastLogin</p>
+            </div>
+        </div>
+    </div>
+</div>

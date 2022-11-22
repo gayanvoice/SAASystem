@@ -13,7 +13,7 @@ namespace SAASystem.Context
         }
         public int Delete(int userId)
         {
-            string query = "DELETE FROM user WHERE where user_id = @user_id";
+            string query = "DELETE FROM user WHERE user_id IN (@user_id)";
             object param = new { user_id = userId };
             return _mySqlHelper.Delete(query, param);
         }
@@ -37,7 +37,7 @@ namespace SAASystem.Context
         public UserModel Select(int userId)
         {
             string query = "SELECT user_id UserId, username Username, email Email, phone_no PhoneNo, surname Surname," +
-                " given_name GivenName, address Address, last_login LastLogin FROM user WHERE where user_id = @user_id";
+                " given_name GivenName, address Address, last_login LastLogin FROM user WHERE user_id IN (@user_id)";
             object param = new { user_id = userId };
             return _mySqlHelper.Select<UserModel>(query, param);
         }

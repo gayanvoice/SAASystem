@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 public class UserModel
 {
+    public string Key { get; set; }
     public int UserId { get; set; }
     public string Username { get; set; }
     public string Email { get; set; }

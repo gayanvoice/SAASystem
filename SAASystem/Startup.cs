@@ -21,7 +21,9 @@ namespace SAASystem
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDataProtection();
             services.AddTransient<IMySqlHelper, MySqlHelper>();
+            services.AddScoped<ICipherHelper, CipherHelper>();
             services.AddScoped<IUserContext, UserContext>();
             services.AddScoped<ITenantContext, TenantContext>();
         }
