@@ -25,7 +25,7 @@ namespace SAASystem
             services.AddTransient<IMySqlHelper, MySqlHelper>();
             services.AddScoped<ICipherHelper, CipherHelper>();
             services.AddScoped<IUserContext, UserContext>();
-            services.AddScoped<ITenantContext, TenantContext>();
+            //services.AddScoped<ITenantContext, TenantContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,9 +51,6 @@ namespace SAASystem
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "Module",
-                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

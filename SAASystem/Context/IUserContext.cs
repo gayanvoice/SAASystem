@@ -5,11 +5,11 @@ namespace SAASystem.Context
 {
     public interface IUserContext
     {
-        UserModel Select(int userId);
-        IEnumerable<UserModel> SelectAll();
-        IEnumerable<UserModel> SelectAll(string address);
-        int Insert(string username, string email, string phoneNo, string surname, string givenName, string address, DateTime lastLogin);
-        int Update(int userId, string username, string email, string phoneNo, string surname, string givenName, string address);
+        UserContextModel Select(int userId);
+        IEnumerable<UserContextModel> SelectAll();
+        IEnumerable<UserContextModel> SelectAll(string address);
+        int Insert(UserContextModel userContextModel);
+        int Update(UserContextModel userContextModel);
         int Delete(int userId);
     }
 }
