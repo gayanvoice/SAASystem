@@ -9,11 +9,15 @@
 </head>
 <body>
     @RenderBody()
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - SAASystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <div class="container">
+        <footer class="py-3 my-4">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">GitHub</a></li>
+            </ul>
+            <p class="text-center text-muted">© 2022 SAASystem, University of Derby</p>
+        </footer>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

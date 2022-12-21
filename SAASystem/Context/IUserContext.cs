@@ -1,4 +1,4 @@
-﻿using System;
+﻿using SAASystem.Models.Context;
 using System.Collections.Generic;
 
 namespace SAASystem.Context
