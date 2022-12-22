@@ -1,4 +1,7 @@
-﻿namespace SAASystem.Singleton
+﻿using MySqlConnector;
+using System.IO;
+
+namespace SAASystem.Singleton
 {
     public sealed class DatabaseSingleton
     {
@@ -8,7 +11,6 @@
         DatabaseSingleton()
         {
         }
-
         public static DatabaseSingleton Instance
         {
             get
@@ -23,11 +25,12 @@
                 }
             }
         }
-        public string ConnectionString
+        public MySqlConnection MySqlConnection
         {
             get
             {
-                return null;
+                string text = File.ReadAllText(@"C:\Users\Gayan\Desktop\key.txt");
+                return new MySqlConnection(text);
             }
         }
     }

@@ -1,18 +1,11 @@
 ﻿using Dapper;
-using MySqlConnector;
 using SAASystem.Helper;
+using SAASystem.Singleton;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 public class MySqlHelper: IMySqlHelper
 {
-    MySqlConnection _mySqlConnection;
-    public MySqlHelper()
-    {
-        string text = File.ReadAllText(@"C:\Users\Gayan\Desktop\key.txt");
-        _mySqlConnection = new MySqlConnection(text);
-    }
     public T Select<T>(string query)
     {
         return QueryFirstOrDefault<T>(query, null);
@@ -65,13 +58,14 @@ public class MySqlHelper: IMySqlHelper
         }
         else
         {
+            DatabaseSingleton databaseSingleton = DatabaseSingleton.Instance;
             if (param is null)
             {
-                return _mySqlConnection.QueryFirstOrDefault<T>(query);
+                return databaseSingleton.MySqlConnection.QueryFirstOrDefault<T>(query);
             }
             else
             {
-                return _mySqlConnection.QueryFirstOrDefault<T>(query, param);
+                return databaseSingleton.MySqlConnection.QueryFirstOrDefault<T>(query, param);
             }
         }
     }
@@ -83,13 +77,14 @@ public class MySqlHelper: IMySqlHelper
         }
         else
         {
+            DatabaseSingleton databaseSingleton = DatabaseSingleton.Instance;
             if (param is null)
             {
-                return _mySqlConnection.Query<T>(query);
+                return databaseSingleton.MySqlConnection.Query<T>(query);
             }
             else
             {
-                return _mySqlConnection.Query<T>(query, param);
+                return databaseSingleton.MySqlConnection.Query<T>(query, param);
             }
         }
     }
@@ -101,13 +96,14 @@ public class MySqlHelper: IMySqlHelper
         }
         else
         {
+            DatabaseSingleton databaseSingleton = DatabaseSingleton.Instance;
             if (param is null)
             {
-                return _mySqlConnection.Execute(query);
+                return databaseSingleton.MySqlConnection.Execute(query);
             }
             else
             {
-                return _mySqlConnection.Execute(query, param);
+                return databaseSingleton.MySqlConnection.Execute(query, param);
             }
         }
     }

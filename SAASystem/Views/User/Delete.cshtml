@@ -1,0 +1,40 @@
+﻿@using System.Reflection;
+@model SAASystem.Models.View.User.DeleteViewModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<link href="https://getbootstrap.com/docs/5.2/examples/features/features.css" rel="stylesheet">
+<div class="px-4 py-5" id="custom-cards">
+    <h2 class="pb-2 border-bottom">@Model.Title</h2>
+    <div class="g-4 py-5">
+        <div class="row g-5">
+            <div class="col-md-7 col-lg-8">
+                <h3>Do you want to delete?</h3>
+                <form class="needs-validation" form method="post" asp-controller="User" asp-action="Delete">
+                    <div class="row g-3">
+                        @{
+                            foreach (PropertyInfo propertyInfo in Model.Form.GetType().GetProperties())
+                            {
+                                <div class="col-sm-6">
+                                    @Html.Label(String.Format("{0}.{1}", nameof(Model.Form), propertyInfo.Name), null, new { @class = "form-label" })
+                                    @Html.Editor(String.Format("{0}.{1}", nameof(Model.Form), propertyInfo.Name), null, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+                                    @Html.ValidationMessage(String.Format("{0}.{1}", nameof(Model.Form), propertyInfo.Name), null, new { @class = "text-danger" })
+                                </div>
+                            }
+                        }
+                    </div>
+                    <hr class="my-4">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <a asp-controller="User" asp-action="List" class="w-100 btn btn-secondary btn-lg">Back</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="w-100 btn btn-primary btn-lg" type="submit">Delete</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

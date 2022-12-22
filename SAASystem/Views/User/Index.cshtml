@@ -1,11 +1,11 @@
-﻿@using SAASystem.Models.Component.Home
-@model SAASystem.Models.View.Home.IndexViewModel
+﻿@using SAASystem.Models.Component.User
+@model SAASystem.Models.View.User.IndexViewModel
 @{
     ViewData["Title"] = Model.Title;
 }
 <link href="https://getbootstrap.com/docs/5.2/examples/features/features.css" rel="stylesheet">
 <div class="px-4 py-5" id="custom-cards">
-    <h2 class="pb-2 border-bottom">@Model.Title</h2>
+    <h2 class="pb-2 border-bottom"><a asp-controller="Home" asp-action="Index" class="text-decoration-none">Index</a> / @Model.Title</h2>
 
     <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
         @{

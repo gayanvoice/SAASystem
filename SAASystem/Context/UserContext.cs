@@ -1,4 +1,5 @@
 ﻿using SAASystem.Helper;
+using SAASystem.Models.Context;
 using System.Collections.Generic;
 
 namespace SAASystem.Context
@@ -13,7 +14,7 @@ namespace SAASystem.Context
         public int Delete(int userId)
         {
             string query = "DELETE FROM user WHERE UserId IN (@UserId)";
-            object param = new { user_id = userId };
+            object param = new { UserId = userId };
             return _mySqlHelper.Delete(query, param);
         }
         public int Insert(UserContextModel userContextModel)
@@ -26,6 +27,12 @@ namespace SAASystem.Context
         {
             string query = "SELECT * FROM user WHERE UserId IN (@UserId)";
             object param = new { UserId = userId };
+            return _mySqlHelper.Select<UserContextModel>(query, param);
+        }
+        public UserContextModel Select(string username)
+        {
+            string query = "SELECT * FROM user WHERE Username IN (@Username)";
+            object param = new { Username = username };
             return _mySqlHelper.Select<UserContextModel>(query, param);
         }
         public IEnumerable<UserContextModel> SelectAll()
