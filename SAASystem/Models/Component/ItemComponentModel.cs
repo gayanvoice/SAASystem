@@ -1,4 +1,4 @@
-﻿namespace SAASystem.Models.Component.Home
+﻿namespace SAASystem.Models.Component
 {
     public class ItemComponentModel
     {
