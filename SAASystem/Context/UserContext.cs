@@ -17,10 +17,10 @@ namespace SAASystem.Context
         public int Delete(int UserId)
         {
             MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
-            string column = UserId.GetType().Name;
+            string column = nameof(UserId);
             string value = UserId.ToString();
             string query = QueryHelper.GetDeleteQuery(_tableName, column);
-            object param = new { column = value };
+            object param = new { UserId = value };
             return mySqlSingleton.Delete(query, param);
         }
 
@@ -34,10 +34,10 @@ namespace SAASystem.Context
         public UserContextModel Select(int UserId)
         {
             MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
-            string column = UserId.GetType().Name;
+            string column = nameof(UserId);
             string value = UserId.ToString();
             string query = QueryHelper.GetSelectQuery(_tableName, column);
-            object param = new { column = value};
+            object param = new { UserId = value};
             return mySqlSingleton.Select<UserContextModel>(query, param);
         }
 

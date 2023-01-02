@@ -17,6 +17,11 @@ namespace SAASystem.Builder
         {
             _userContextModel = userContextModel;
         }
+        public UserBuilder SetUserId(int userId)
+        {
+            _userContextModel.UserId = userId;
+            return this;
+        }
         public UserBuilder SetAddress(string address)
         {
             _userContextModel.Address = address;
@@ -52,6 +57,7 @@ namespace SAASystem.Builder
             _userContextModel.Username = username;
             return this;
         }
+
         public UserContextModel Build()
         {
             UserContextModel model = _userContextModel;

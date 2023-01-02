@@ -9,7 +9,7 @@ namespace SAASystem.Helper
         public static string GetDeleteQuery(string tableName, string columnName)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("DELETE FROM ").Append(tableName).Append(" WHERE ").Append(columnName).Append(" IN (").Append(columnName).Append(")");
+            stringBuilder.Append("DELETE FROM ").Append(tableName).Append(" WHERE ").Append(columnName).Append(" IN (@").Append(columnName).Append(")");
             return stringBuilder.ToString();
         }
         public static string GetInsertQuery<Type>(string tableName, Type type)
@@ -44,7 +44,7 @@ namespace SAASystem.Helper
         public static string GetSelectQuery(string tableName, string columnName)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("SELECT * FROM ").Append(tableName).Append(" WHERE ").Append(columnName).Append(" IN (").Append(columnName).Append(")");
+            stringBuilder.Append("SELECT * FROM ").Append(tableName).Append(" WHERE ").Append(columnName).Append(" IN (@").Append(columnName).Append(")");
             return stringBuilder.ToString();
         }
         public static string GetSelectAllQuery(string tableName)

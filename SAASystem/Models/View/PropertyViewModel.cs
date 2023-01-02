@@ -73,22 +73,27 @@ namespace SAASystem.Models.View
                 public int PropertyId { get; set; }
 
                 [Required]
+                [StringLength(45)]
                 [Display(Name = "Name")]
                 public string Name { get; set; }
 
                 [Required]
+                [StringLength(45)]
                 [Display(Name = "Address")]
                 public string Address { get; set; }
 
                 [Required]
+                [StringLength(45)]
                 [Display(Name = "Street")]
                 public string Street { get; set; }
 
                 [Required]
+                [StringLength(45)]
                 [Display(Name = "City")]
                 public string City { get; set; }
 
                 [Required]
+                [StringLength(45)]
                 [Display(Name = "PostCode")]
                 public string PostCode { get; set; }
 
@@ -112,22 +117,27 @@ namespace SAASystem.Models.View
             public class FormViewModel
             {
                 [Required]
+                [StringLength(45)]
                 [Display(Name = "Name")]
                 public string Name { get; set; }
 
                 [Required]
+                [StringLength(45)]
                 [Display(Name = "Address")]
                 public string Address { get; set; }
 
                 [Required]
+                [StringLength(45)]
                 [Display(Name = "Street")]
                 public string Street { get; set; }
 
                 [Required]
+                [StringLength(45)]
                 [Display(Name = "City")]
                 public string City { get; set; }
 
                 [Required]
+                [StringLength(45)]
                 [Display(Name = "PostCode")]
                 public string PostCode { get; set; }
             }

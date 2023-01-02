@@ -32,13 +32,13 @@ namespace SAASystem.Models.View
                 [Display(Name = "Email")]
                 public string Email { get; set; }
 
-                [Display(Name = "PhoneNo")]
+                [Display(Name = "Phone No")]
                 public string PhoneNo { get; set; }
 
                 [Display(Name = "Surname")]
                 public string Surname { get; set; }
 
-                [Display(Name = "GivenName")]
+                [Display(Name = "Given Name")]
                 public string GivenName { get; set; }
 
 
@@ -79,26 +79,32 @@ namespace SAASystem.Models.View
                 public int UserId { get; set; }
 
                 [Required]
+                [StringLength(10)]
                 [Display(Name = "Username")]
                 public string Username { get; set; }
 
                 [Required]
+                [StringLength(40)]
                 [Display(Name = "Email")]
                 public string Email { get; set; }
 
                 [Required]
-                [Display(Name = "PhoneNo")]
+                [StringLength(20)]
+                [Display(Name = "Phone No")]
                 public string PhoneNo { get; set; }
 
                 [Required]
+                [StringLength(40)]
                 [Display(Name = "Surname")]
                 public string Surname { get; set; }
 
                 [Required]
-                [Display(Name = "GivenName")]
+                [StringLength(40)]
+                [Display(Name = "Given Name")]
                 public string GivenName { get; set; }
 
                 [Required]
+                [StringLength(120)]
                 [Display(Name = "Address")]
                 public string Address { get; set; }
 
@@ -123,26 +129,32 @@ namespace SAASystem.Models.View
             public class FormViewModel
             {
                 [Required]
+                [StringLength(10)]
                 [Display(Name = "Username")]
                 public string Username { get; set; }
 
                 [Required]
+                [StringLength(40)]
                 [Display(Name = "Email")]
                 public string Email { get; set; }
 
                 [Required]
-                [Display(Name = "PhoneNo")]
+                [StringLength(20)]
+                [Display(Name = "Phone No")]
                 public string PhoneNo { get; set; }
 
                 [Required]
+                [StringLength(40)]
                 [Display(Name = "Surname")]
                 public string Surname { get; set; }
 
                 [Required]
-                [Display(Name = "GivenName")]
+                [StringLength(40)]
+                [Display(Name = "Given Name")]
                 public string GivenName { get; set; }
 
                 [Required]
+                [StringLength(120)]
                 [Display(Name = "Address")]
                 public string Address { get; set; }
             }

@@ -76,6 +76,7 @@ namespace SAASystem.Models.View
                 public int SuiteId { get; set; }
 
                 [Required]
+                [StringLength(10)]
                 [Display(Name = "Code")]
                 public string Code { get; set; }
 
@@ -107,6 +108,7 @@ namespace SAASystem.Models.View
                 public int SuiteId { get; set; }
 
                 [Required]
+                [StringLength(10)]
                 [Display(Name = "Code")]
                 public string Code { get; set; }
             }
