@@ -65,6 +65,8 @@ namespace SAASystem.Controllers
             }
             else
             {
+                ErrorViewModel errorViewModel = new ErrorViewModel();
+                return RedirectToAction<ErrorController>(m => m.Show());
                 ModelState.AddModelError("Username", "Username is already exist");
                 return View(addViewModel);
             }

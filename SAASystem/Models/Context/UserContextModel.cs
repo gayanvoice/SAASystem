@@ -7,7 +7,6 @@
     //`Surname` varchar(40) NOT NULL
     //`GivenName` varchar(40) NOT NULL
     //`Address` varchar(120) NOT NULL
-    //`LastLogin` datetime NOT NULL
     public class UserContextModel
     {
         public int UserId { get; set; }

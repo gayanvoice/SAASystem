@@ -1,9 +1,12 @@
 ﻿//`RoomId` int (11) NOT NULL AUTO_INCREMENT
 //`ApartmentId` int (11) NOT NULL
-//`Status` tinyint(1) NOT NULL
-public class RoomContextModel
+//`Status` varchar(10) NOT NULL
+namespace SAASystem.Models.Context
 {
-    public int RoomId { get; set; }
-    public int ApartmentId { get; set; }
-    public bool Status { get; set; }
+    public class RoomContextModel
+    {
+        public int RoomId { get; set; }
+        public int ApartmentId { get; set; }
+        public string Status { get; set; }
+    }
 }
