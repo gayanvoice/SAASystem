@@ -1,56 +1,58 @@
-﻿using SAASystem.Helper;
+﻿using SAASystem.Context.Interface;
+using SAASystem.Helper;
 using SAASystem.Models.Context;
+using SAASystem.Singleton;
+using System;
 using System.Collections.Generic;
 
 namespace SAASystem.Context
 {
     public class UserContext : IUserContext
     {
-        private readonly IMySqlHelper _mySqlHelper;
-        public UserContext(IMySqlHelper mySqlHelper)
+        private string _tableName;
+        public void Set(string tableName)
         {
-            _mySqlHelper = mySqlHelper;
+            _tableName = tableName;
         }
-        public int Delete(int userId)
+        public int Delete(int UserId)
         {
-            string query = "DELETE FROM user WHERE UserId IN (@UserId)";
-            object param = new { UserId = userId };
-            return _mySqlHelper.Delete(query, param);
+            MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
+            string column = UserId.GetType().Name;
+            string value = UserId.ToString();
+            string query = QueryHelper.GetDeleteQuery(_tableName, column);
+            object param = new { column = value };
+            return mySqlSingleton.Delete(query, param);
         }
+
         public int Insert(UserContextModel userContextModel)
         {
-            string query = "INSERT INTO user (Username, Email, PhoneNo, Surname, GivenName, Address) values " +
-                "(@Username, @Email, @PhoneNo, @Surname, @GivenName, @Address)";
-            return _mySqlHelper.Insert(query, userContextModel);
+            MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
+            string query = QueryHelper.GetInsertQuery(_tableName, userContextModel);
+            return mySqlSingleton.Insert(query, userContextModel);
         }
-        public UserContextModel Select(int userId)
+
+        public UserContextModel Select(int UserId)
         {
-            string query = "SELECT * FROM user WHERE UserId IN (@UserId)";
-            object param = new { UserId = userId };
-            return _mySqlHelper.Select<UserContextModel>(query, param);
+            MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
+            string column = UserId.GetType().Name;
+            string value = UserId.ToString();
+            string query = QueryHelper.GetSelectQuery(_tableName, column);
+            object param = new { column = value};
+            return mySqlSingleton.Select<UserContextModel>(query, param);
         }
-        public UserContextModel Select(string username)
-        {
-            string query = "SELECT * FROM user WHERE Username IN (@Username)";
-            object param = new { Username = username };
-            return _mySqlHelper.Select<UserContextModel>(query, param);
-        }
+
         public IEnumerable<UserContextModel> SelectAll()
         {
-            string query = "SELECT * FROM user";
-            return _mySqlHelper.SelectAll<UserContextModel>(query);
+            MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
+            string query = QueryHelper.GetSelectAllQuery(_tableName);
+            return mySqlSingleton.SelectAll<UserContextModel>(query);
         }
-        public IEnumerable<UserContextModel> SelectAll(string address)
-        {
-            string query = "SELECT * FROM user WHERE address IN (@address)";
-            object param = new { address = address };
-            return _mySqlHelper.SelectAll<UserContextModel>(query, param);
-        }
+
         public int Update(UserContextModel userContextModel)
         {
-            string query = "UPDATE user SET Username = @Username, Email = @Email, PhoneNo = @PhoneNo, Surname = @Surname," +
-                " GivenName = @GivenName, Address = @Address WHERE UserId IN (@UserId)";
-            return _mySqlHelper.Update(query, userContextModel);
+            MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
+            string query = QueryHelper.GetUpdateQuery(_tableName, userContextModel);
+            return mySqlSingleton.Update(query, userContextModel);
         }
     }
 }

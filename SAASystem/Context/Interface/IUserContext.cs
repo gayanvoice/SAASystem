@@ -1,16 +1,15 @@
 ﻿using SAASystem.Models.Context;
 using System.Collections.Generic;
 
-namespace SAASystem.Context
+namespace SAASystem.Context.Interface
 {
     public interface IUserContext
     {
-        UserContextModel Select(int userId);
-        UserContextModel Select(string username);
-        IEnumerable<UserContextModel> SelectAll();
-        IEnumerable<UserContextModel> SelectAll(string address);
-        int Insert(UserContextModel userContextModel);
-        int Update(UserContextModel userContextModel);
+        void Set(string tableName);
         int Delete(int userId);
+        int Insert(UserContextModel userContextModel);
+        UserContextModel Select(int userId);
+        IEnumerable<UserContextModel> SelectAll();
+        int Update(UserContextModel userContextModel);
     }
 }

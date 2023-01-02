@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SAASystem.Context;
-using SAASystem.Helper;
+using SAASystem.Context.Interface;
 
 namespace SAASystem
 {
