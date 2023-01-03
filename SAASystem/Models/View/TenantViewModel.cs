@@ -26,7 +26,7 @@ namespace SAASystem.Models.View
                 [Display(Name = "Tenant Id")]
                 public int TenantId { get; set; }
 
-                [Display(Name = "Name")]
+                [Display(Name = "User Id")]
                 public int UserId { get; set; }
                 public static FormViewModel FromContextModel(
                     TenantContextModel contextModel)

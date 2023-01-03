@@ -65,6 +65,7 @@ namespace SAASystem.Models.View
                 public int RoleId { get; set; }
 
                 [Required]
+                [StringLength(20)]
                 [Display(Name = "Name")]
                 public string Name { get; set; }
 
@@ -94,6 +95,7 @@ namespace SAASystem.Models.View
             public class FormViewModel
             {
                 [Required]
+                [StringLength(20)]
                 [Display(Name = "Name")]
                 public string Name { get; set; }
 
