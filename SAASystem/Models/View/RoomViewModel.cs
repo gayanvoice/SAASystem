@@ -54,6 +54,7 @@ namespace SAASystem.Models.View
         }
         public class EditViewModel
         {
+            public IEnumerable<SelectListItem> ApartmentEnumerable { get; set; }
             public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
@@ -83,6 +84,8 @@ namespace SAASystem.Models.View
         }
         public class InsertViewModel
         {
+            public IEnumerable<SelectListItem> ApartmentEnumerable { get; set; }
+
             public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
