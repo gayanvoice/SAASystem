@@ -44,7 +44,7 @@ namespace SAASystem.Helper
             }
             return selectListItemList;
         }
-        public static IEnumerable<SelectListItem> FromTenantModelEnumerable(
+        public static IEnumerable<SelectListItem> FromRoleModelEnumerable(
                     IEnumerable<RoleContextModel> enumerable)
         {
             IList<SelectListItem> selectListItemList = new List<SelectListItem>();
