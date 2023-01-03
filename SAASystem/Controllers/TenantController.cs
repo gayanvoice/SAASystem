@@ -136,13 +136,13 @@ namespace SAASystem.Controllers
             {
                 Name = "Insert",
                 Route = new ItemComponentModel.RouteModel() { Controller = "Tenant", Action = "Insert" },
-                ImageUrl = "https://getbootstrap.com/docs/5.2/examples/features/unsplash-photo-1.jpg"
+                ImageUrl = "/icon/insert.jpg"
             });
             itemModelList.Add(new ItemComponentModel()
             {
                 Name = "List",
                 Route = new ItemComponentModel.RouteModel() { Controller = "Tenant", Action = "List" },
-                ImageUrl = "https://getbootstrap.com/docs/5.2/examples/features/unsplash-photo-1.jpg"
+                ImageUrl = "/icon/list.jpg"
             });
             return itemModelList;
         }
