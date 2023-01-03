@@ -19,7 +19,7 @@ namespace SAASystem.Helper
             }
             return selectListItemList;
         }
-        public static IEnumerable<SelectListItem> FromUserModelEnumerable(
+        public static IEnumerable<SelectListItem> FromApartmentModelEnumerable(
             IEnumerable<ApartmentContextModel> enumerable)
         {
             IList<SelectListItem> selectListItemList = new List<SelectListItem>();
