@@ -32,7 +32,7 @@ namespace SAASystem.Context
             string column = nameof(SuiteId);
             string value = SuiteId.ToString();
             string query = QueryHelper.GetSelectQuery(_tableName, column);
-            object param = new { StockId = value};
+            object param = new { SuiteId = value};
             return mySqlSingleton.Select<SuiteContextModel>(query, param);
         }
 
