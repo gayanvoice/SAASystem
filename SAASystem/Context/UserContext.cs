@@ -9,11 +9,7 @@ namespace SAASystem.Context
 {
     public class UserContext : IUserContext
     {
-        private string _tableName;
-        public void Set(string tableName)
-        {
-            _tableName = tableName;
-        }
+        private string _tableName = "User";
         public int Delete(int UserId)
         {
             MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;

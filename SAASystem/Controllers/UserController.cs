@@ -14,7 +14,6 @@ namespace SAASystem.Controllers
         public UserController(IUserContext userContext)
         {
             _userContext = userContext;
-            _userContext.Set("User");
         }
         public IActionResult Index()
         {
