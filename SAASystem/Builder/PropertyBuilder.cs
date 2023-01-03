@@ -38,6 +38,11 @@ namespace SAASystem.Builder
             _contextModel.City = city;
             return this;
         }
+        public PropertyBuilder SetStreet(string street)
+        {
+            _contextModel.Street = street;
+            return this;
+        }
         public PropertyBuilder SetPostalCode(string postalCode)
         {
             _contextModel.PostalCode = postalCode;

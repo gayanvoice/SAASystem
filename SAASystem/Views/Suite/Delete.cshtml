@@ -1,8 +1,8 @@
 ﻿@using System.Reflection;
-@model SAASystem.Models.View.PropertyViewModel.DeleteViewModel
+@model SAASystem.Models.View.SuiteViewModel.DeleteViewModel
 @{
     ViewData["Title"] = "Delete";
-    string controller = "Property";
+    string controller = "Suite";
 }
 
 <div class="px-4 py-5" id="custom-cards">
@@ -13,11 +13,11 @@
                 <form class="needs-validation" form method="post" asp-controller="@controller" asp-action="Delete">
                     <div class="row g-3">
                         @{
-                            string[] columns = new[] { "PropertyId", "Name" };
-                            foreach (PropertyInfo propertyInfo in Model.PropertyContextModel.GetType().GetProperties()
+                            string[] columns = new[] { "SuiteId", "Name" };
+                            foreach (PropertyInfo propertyInfo in Model.SuiteContextModel.GetType().GetProperties()
                                                 .Where(type => columns.Contains(type.Name)))
                             {
-                                string name = String.Concat("PropertyContextModel", ".", propertyInfo.Name);
+                                string name = String.Concat("SuiteContextModel", ".", propertyInfo.Name);
                                 <div class="col-sm-12 mb-2">
                                     @Html.Label(name, null, new { @class = "form-label" })
                                     @Html.Editor(name, null, new { htmlAttributes = new { @class = "form-control"} })
