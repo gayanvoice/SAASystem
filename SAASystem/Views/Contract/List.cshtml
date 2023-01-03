@@ -1,9 +1,9 @@
 ﻿@using System.Reflection;
 @using SAASystem.Models.Context;
-@model SAASystem.Models.View.ApartmentViewModel.ListViewModel
+@model SAASystem.Models.View.ContractViewModel.ListViewModel
 @{
     ViewData["Title"] = "List";
-    string controller = "Apartment";
+    string controller = "Contract";
 }
 @section CSS
 {
@@ -54,14 +54,14 @@
     <h2 class="pb-2 border-bottom"><a asp-controller="@controller" asp-action="Index" class="text-decoration-none">Index</a> / List</h2>
 
     <div class="g-4 py-5">
-        @if (Model.ApartmentContextModelEnumerable.Count() > 0)
+        @if (Model.ContractContextModelEnumerable.Count() > 0)
         {
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
                             @{
-                                foreach (PropertyInfo propertyInfo in Model.ApartmentContextModelEnumerable
+                                foreach (PropertyInfo propertyInfo in Model.ContractContextModelEnumerable
                                     .First().GetType().GetProperties().Take(4))
                                 {
                                     <th scope="col">@propertyInfo.Name</th>
@@ -72,9 +72,9 @@
                     </thead>
                     <tbody>
                         @{
-                            foreach (ApartmentContextModel contextModel in Model.ApartmentContextModelEnumerable)
+                            foreach (ContractContextModel contextModel in Model.ContractContextModelEnumerable)
                             {
-                                int id = contextModel.ApartmentId;
+                                int id = contextModel.ContractId;
                                 <tr>
                                     @foreach (PropertyInfo propertyInfo in contextModel.GetType().GetProperties().Take(4))
                                     {
