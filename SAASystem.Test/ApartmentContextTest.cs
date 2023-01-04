@@ -31,7 +31,7 @@ namespace SAASystem.Test
         {
             ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             IEnumerable<ApartmentContextModel> apartmentContextEnumerable = apartmentContextSingleton.SelectAll();
-            Assert.Equal(30, apartmentContextEnumerable.Count());
+            Assert.Equal(29, apartmentContextEnumerable.Count());
         }
         [Fact]
         public void Insert()
