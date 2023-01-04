@@ -9,20 +9,11 @@ namespace SAASystem.Test
 {
     public class ContractControllerTest
     {
-        private readonly Mock<IContractContext> _mockContractContext;
-        private readonly Mock<ITenantContext> _mockTenantContext;
-        private readonly Mock<IRoomContext> _mockRoomContext;
         private readonly ContractController _controller;
 
         public ContractControllerTest()
         {
-            _mockContractContext = new Mock<IContractContext>();
-            _mockTenantContext = new Mock<ITenantContext>();
-            _mockRoomContext = new Mock<IRoomContext>();
-            _controller = new ContractController(
-                _mockContractContext.Object,
-                _mockTenantContext.Object,
-                _mockRoomContext.Object);
+            _controller = new ContractController();
         }
 
         [Fact]
