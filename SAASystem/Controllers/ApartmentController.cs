@@ -5,6 +5,7 @@ using SAASystem.Helper;
 using SAASystem.Models.Component;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
+using SAASystem.Singleton;
 using System.Collections.Generic;
 
 namespace SAASystem.Controllers
@@ -31,14 +32,16 @@ namespace SAASystem.Controllers
         }
         public IActionResult List(string param)
         {
+            ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             ApartmentViewModel.ListViewModel list = new ApartmentViewModel.ListViewModel();
             list.Status = param;
-            list.ApartmentContextModelEnumerable = _apartmentContext.SelectAll();
+            list.ApartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
             return View(list);
         }
         public IActionResult Show(int id)
         {
-            ApartmentContextModel contextModel = _apartmentContext.Select(id);
+            ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
+            ApartmentContextModel contextModel = apartmentContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
