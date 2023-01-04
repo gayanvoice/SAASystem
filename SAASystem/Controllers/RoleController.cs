@@ -1,36 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
-using SAASystem.Context.Interface;
-using SAASystem.Models.Component;
+using SAASystem.Helper;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
-using System.Collections.Generic;
+using SAASystem.Singleton;
 
 namespace SAASystem.Controllers
 {
     public class RoleController : Controller
     {
-        private readonly IRoleContext _roleContext;
-        public RoleController(IRoleContext roleContext)
-        {
-            _roleContext = roleContext;
-        }
         public IActionResult Index()
         {
             RoleViewModel.IndexViewModel viewModel = new RoleViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = GetItemComponentModels();
+            viewModel.ItemComponentModelEnumerable = RoleControllerHelper.GetItemComponentModels();
             return View(viewModel);
         }
         public IActionResult List(string param)
         {
+            RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
             RoleViewModel.ListViewModel list = new RoleViewModel.ListViewModel();
             list.Status = param;
-            list.RoleContextModelEnumerable = _roleContext.SelectAll();
+            list.RoleContextModelEnumerable = roleContextSingleton.SelectAll();
             return View(list);
         }
         public IActionResult Show(int id)
         {
-            RoleContextModel contextModel = _roleContext.Select(id);
+            RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
+            RoleContextModel contextModel = roleContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -42,7 +38,8 @@ namespace SAASystem.Controllers
         }
         public IActionResult Edit(int id)
         {
-            RoleContextModel contextModel = _roleContext.Select(id);
+            RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
+            RoleContextModel contextModel = roleContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -61,6 +58,7 @@ namespace SAASystem.Controllers
             {
                 return View(editViewModel);
             }
+            RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
             RoleBuilder builder = new RoleBuilder();
             RoleContextModel contextModel = builder
                 .SetRoleId(editViewModel.Form.RoleId)
@@ -68,7 +66,7 @@ namespace SAASystem.Controllers
                 .SetWorkHours(editViewModel.Form.WorkHours)
                 .SetPayHour(editViewModel.Form.PayHour)
                 .Build();
-            _roleContext.Update(contextModel);
+            roleContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
         }
         public IActionResult Insert()
@@ -84,19 +82,20 @@ namespace SAASystem.Controllers
             {
                 return View(insertViewModel);
             }
+            RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
             RoleBuilder builder = new RoleBuilder();
             RoleContextModel contextModel = builder
                 .SetName(insertViewModel.Form.Name)
                 .SetWorkHours(insertViewModel.Form.WorkHours)
                 .SetPayHour(insertViewModel.Form.PayHour)
                 .Build();
-            _roleContext.Insert(contextModel);
+            roleContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });
         }
-
         public IActionResult Delete(int id)
         {
-            RoleContextModel contextModel = _roleContext.Select(id);
+            RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
+            RoleContextModel contextModel = roleContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -114,30 +113,14 @@ namespace SAASystem.Controllers
             }
             try
             {
-                _roleContext.Delete(deleteViewModel.RoleContextModel.RoleId);
+                RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
+                roleContextSingleton.Delete(deleteViewModel.RoleContextModel.RoleId);
                 return RedirectToAction(nameof(List), new { Param = "SuccessDelete" });
             }
             catch
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorConstraint" });
             }
-        }
-        private IEnumerable<ItemComponentModel> GetItemComponentModels()
-        {
-            List<ItemComponentModel> itemModelList = new List<ItemComponentModel>();
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "Insert",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Role", Action = "Insert" },
-                ImageUrl = "/icon/insert.jpg"
-            });
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "List",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Role", Action = "List" },
-                ImageUrl = "/icon/list.jpg"
-            });
-            return itemModelList;
         }
     }
 }
