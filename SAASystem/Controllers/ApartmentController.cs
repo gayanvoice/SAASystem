@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
-using SAASystem.Context.Interface;
 using SAASystem.Helper;
-using SAASystem.Models.Component;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
 using SAASystem.Singleton;
@@ -63,17 +61,17 @@ namespace SAASystem.Controllers
         [HttpPost]
         public IActionResult Edit(ApartmentViewModel.EditViewModel editViewModel)
         {
-            ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
-            PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
-            SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
             if (!ModelState.IsValid)
             {
+                PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
+                SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
                 IEnumerable<PropertyContextModel> propertyContextModelEnumerable = propertyContextSingleton.SelectAll();
                 IEnumerable<SuiteContextModel> suiteContextModelEnumerable = suiteContextSingleton.SelectAll();
                 editViewModel.PropertyEnumerable = ApartmentHelper.FromPropertyModelEnumerable(propertyContextModelEnumerable);
                 editViewModel.SuiteEnumerable = ApartmentHelper.FromSuiteModelEnumerable(suiteContextModelEnumerable);
                 return View(editViewModel);
             }
+            ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             ApartmentBuilder builder = new ApartmentBuilder();
             ApartmentContextModel contextModel = builder
                 .SetApartmentId(editViewModel.Form.ApartmentId)

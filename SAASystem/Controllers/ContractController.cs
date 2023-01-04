@@ -1,44 +1,33 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
-using SAASystem.Context.Interface;
 using SAASystem.Helper;
-using SAASystem.Models.Component;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
+using SAASystem.Singleton;
 using System.Collections.Generic;
 
 namespace SAASystem.Controllers
 {
     public class ContractController : Controller
     {
-        private readonly IContractContext _contractContext;
-        private readonly ITenantContext _tenantContext;
-        private readonly IRoomContext _roomContext;
-        public ContractController(
-            IContractContext contractContext,
-            ITenantContext tenantContext,
-            IRoomContext roomContext)
-        {
-            _contractContext = contractContext;
-            _tenantContext = tenantContext;
-            _roomContext = roomContext;
-        }
         public IActionResult Index()
         {
             ContractViewModel.IndexViewModel viewModel = new ContractViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = GetItemComponentModels();
+            viewModel.ItemComponentModelEnumerable = ContractHelper.GetItemComponentModels();
             return View(viewModel);
         }
         public IActionResult List(string param)
         {
+            ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
             ContractViewModel.ListViewModel list = new ContractViewModel.ListViewModel();
             list.Status = param;
-            list.ContractContextModelEnumerable = _contractContext.SelectAll();
+            list.ContractContextModelEnumerable = contractContextSingleton.SelectAll();
             return View(list);
         }
         public IActionResult Show(int id)
         {
-            ContractContextModel contextModel = _contractContext.Select(id);
+            ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
+            ContractContextModel contextModel = contractContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -50,15 +39,18 @@ namespace SAASystem.Controllers
         }
         public IActionResult Edit(int id)
         {
-            ContractContextModel contextModel = _contractContext.Select(id);
+            ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
+            ContractContextModel contextModel = contractContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
             }
             else
             {
-                IEnumerable<RoomContextModel> roomContextModelEnumerable = _roomContext.SelectAll();
-                IEnumerable<TenantContextModel> tenantContextModelEnumerable = _tenantContext.SelectAll();
+                RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
+                TenantContextSingleton tenantContextSingleton = TenantContextSingleton.Instance;
+                IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
+                IEnumerable<TenantContextModel> tenantContextModelEnumerable = tenantContextSingleton.SelectAll();
                 ContractViewModel.EditViewModel editViewModel = new ContractViewModel.EditViewModel();
                 editViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
                 editViewModel.TenantEnumerable = ContractHelper.FromTenantModelEnumerable(tenantContextModelEnumerable);
@@ -71,12 +63,15 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                IEnumerable<RoomContextModel> roomContextModelEnumerable = _roomContext.SelectAll();
-                IEnumerable<TenantContextModel> tenantContextModelEnumerable = _tenantContext.SelectAll();
+                RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
+                TenantContextSingleton tenantContextSingleton = TenantContextSingleton.Instance;
+                IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
+                IEnumerable<TenantContextModel> tenantContextModelEnumerable = tenantContextSingleton.SelectAll();
                 editViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
                 editViewModel.TenantEnumerable = ContractHelper.FromTenantModelEnumerable(tenantContextModelEnumerable);
                 return View(editViewModel);
             }
+            ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
             ContractBuilder builder = new ContractBuilder();
             ContractContextModel contextModel = builder
                 .SetContractId(editViewModel.Form.ContractId)
@@ -87,14 +82,16 @@ namespace SAASystem.Controllers
                 .SetDepositAmount(editViewModel.Form.DepositAmount)
                 .SetPayedAmount(editViewModel.Form.PayedAmount)
                 .Build();
-            _contractContext.Update(contextModel);
+            contractContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
         }
         public IActionResult Insert()
         {
+            RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
+            TenantContextSingleton tenantContextSingleton = TenantContextSingleton.Instance;
             ContractViewModel.InsertViewModel insertViewModel = new ContractViewModel.InsertViewModel();
-            IEnumerable<RoomContextModel> roomContextModelEnumerable = _roomContext.SelectAll();
-            IEnumerable<TenantContextModel> tenantContextModelEnumerable = _tenantContext.SelectAll();
+            IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
+            IEnumerable<TenantContextModel> tenantContextModelEnumerable = tenantContextSingleton.SelectAll();
             insertViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
             insertViewModel.TenantEnumerable = ContractHelper.FromTenantModelEnumerable(tenantContextModelEnumerable);
             insertViewModel.Form = new ContractViewModel.InsertViewModel.FormViewModel();
@@ -105,12 +102,15 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                IEnumerable<RoomContextModel> roomContextModelEnumerable = _roomContext.SelectAll();
-                IEnumerable<TenantContextModel> tenantContextModelEnumerable = _tenantContext.SelectAll();
+                RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
+                TenantContextSingleton tenantContextSingleton = TenantContextSingleton.Instance;
+                IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
+                IEnumerable<TenantContextModel> tenantContextModelEnumerable = tenantContextSingleton.SelectAll();
                 insertViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
                 insertViewModel.TenantEnumerable = ContractHelper.FromTenantModelEnumerable(tenantContextModelEnumerable);
                 return View(insertViewModel);
             }
+            ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
             ContractBuilder builder = new ContractBuilder();
             ContractContextModel contextModel = builder
                 .SetRoomId(insertViewModel.Form.RoomId)
@@ -120,13 +120,14 @@ namespace SAASystem.Controllers
                 .SetDepositAmount(insertViewModel.Form.DepositAmount)
                 .SetPayedAmount(insertViewModel.Form.PayedAmount)
                 .Build();
-            _contractContext.Insert(contextModel);
+            contractContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });
         }
 
         public IActionResult Delete(int id)
         {
-            ContractContextModel contextModel = _contractContext.Select(id);
+            ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
+            ContractContextModel contextModel = contractContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -144,30 +145,14 @@ namespace SAASystem.Controllers
             }
             try
             {
-                _contractContext.Delete(deleteViewModel.ContractContextModel.ContractId);
+                ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
+                contractContextSingleton.Delete(deleteViewModel.ContractContextModel.ContractId);
                 return RedirectToAction(nameof(List), new { Param = "SuccessDelete" });
             }
             catch
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorConstraint" });
             }
-        }
-        private IEnumerable<ItemComponentModel> GetItemComponentModels()
-        {
-            List<ItemComponentModel> itemModelList = new List<ItemComponentModel>();
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "Insert",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Contract", Action = "Insert" },
-                ImageUrl = "/icon/insert.jpg"
-            });
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "List",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Contract", Action = "List" },
-                ImageUrl = "/icon/list.jpg"
-            });
-            return itemModelList;
         }
     }
 }
