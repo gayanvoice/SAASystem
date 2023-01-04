@@ -2,6 +2,7 @@
 {
     //`UserId` int (11) NOT NULL AUTO_INCREMENT
     //`Username` varchar(10) NOT NULL
+    //`Password` varchar(1024) NOT NULL
     //`Email` varchar(40) NOT NULL
     //`PhoneNo` varchar(20) NOT NULL
     //`Surname` varchar(40) NOT NULL
@@ -11,6 +12,7 @@
     {
         public int UserId { get; set; }
         public string Username { get; set; }
+        public string Password { get; set; }
         public string Email { get; set; }
         public string PhoneNo { get; set; }
         public string Surname { get; set; }

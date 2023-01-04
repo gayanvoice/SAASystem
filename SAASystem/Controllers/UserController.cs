@@ -63,6 +63,7 @@ namespace SAASystem.Controllers
             UserContextModel contextModel = builder
                 .SetUserId(editViewModel.Form.UserId)
                 .SetUsername(editViewModel.Form.Username)
+                .SetPassword(editViewModel.Form.Password)
                 .SetEmail(editViewModel.Form.Email)
                 .SetPhoneNo(editViewModel.Form.PhoneNo)
                 .SetSurname(editViewModel.Form.Surname)
@@ -89,6 +90,7 @@ namespace SAASystem.Controllers
             UserBuilder builder = new UserBuilder();
             UserContextModel contextModel = builder
                 .SetUsername(insertViewModel.Form.Username)
+                .SetPassword(insertViewModel.Form.Password)
                 .SetEmail(insertViewModel.Form.Email)
                 .SetPhoneNo(insertViewModel.Form.PhoneNo)
                 .SetSurname(insertViewModel.Form.Surname)

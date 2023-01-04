@@ -36,14 +36,12 @@ namespace SAASystem.Singleton
             object param = new { UserId = value };
             return mySqlSingleton.Delete(query, param);
         }
-
         public int Insert(UserContextModel userContextModel)
         {
             MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
             string query = QueryHelper.GetInsertQuery(tableName, userContextModel);
             return mySqlSingleton.Insert(query, userContextModel);
         }
-
         public UserContextModel Select(int UserId)
         {
             MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
@@ -53,14 +51,21 @@ namespace SAASystem.Singleton
             object param = new { UserId = value };
             return mySqlSingleton.Select<UserContextModel>(query, param);
         }
-
+        public UserContextModel Select(string Username)
+        {
+            MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
+            string column = nameof(Username);
+            string value = Username.ToString();
+            string query = QueryHelper.GetSelectQuery(tableName, column);
+            object param = new { Username = value };
+            return mySqlSingleton.Select<UserContextModel>(query, param);
+        }
         public IEnumerable<UserContextModel> SelectAll()
         {
             MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
             string query = QueryHelper.GetSelectAllQuery(tableName);
             return mySqlSingleton.SelectAll<UserContextModel>(query);
         }
-
         public int Update(UserContextModel userContextModel)
         {
             MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using SAASystem.Models.Component;
+﻿using SAASystem.Models.Component;
 using SAASystem.Models.Context;
+using SAASystem.Singleton;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,6 +29,9 @@ namespace SAASystem.Models.View
                 [Display(Name = "Username")]
                 public string Username { get; set; }
 
+                [Display(Name = "Password")]
+                public string Password { get; set; }
+
                 [Display(Name = "Email")]
                 public string Email { get; set; }
 
@@ -51,6 +54,7 @@ namespace SAASystem.Models.View
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.UserId = contextModel.UserId;
                     formViewModel.Username = contextModel.Username;
+                    formViewModel.Password = contextModel.Password;
                     formViewModel.Email = contextModel.Email;
                     formViewModel.PhoneNo = contextModel.PhoneNo;
                     formViewModel.Surname = contextModel.Surname;
@@ -83,6 +87,12 @@ namespace SAASystem.Models.View
                 [Display(Name = "Username")]
                 public string Username { get; set; }
 
+
+                [Required]
+                [StringLength(20)]
+                [Display(Name = "Password")]
+                public string Password { get; set; }
+
                 [Required]
                 [StringLength(40)]
                 [Display(Name = "Email")]
@@ -111,9 +121,11 @@ namespace SAASystem.Models.View
                 public static FormViewModel FromContextModel(
                     UserContextModel contextModel)
                 {
+                    CipherSingleton cipherSingleton = CipherSingleton.Instance;
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.UserId = contextModel.UserId;
                     formViewModel.Username = contextModel.Username;
+                    formViewModel.Password = cipherSingleton.Decrypt(contextModel.Password);
                     formViewModel.Email = contextModel.Email;
                     formViewModel.PhoneNo = contextModel.PhoneNo;
                     formViewModel.Surname = contextModel.Surname;
@@ -132,6 +144,11 @@ namespace SAASystem.Models.View
                 [StringLength(10)]
                 [Display(Name = "Username")]
                 public string Username { get; set; }
+
+                [Required]
+                [StringLength(20)]
+                [Display(Name = "Password")]
+                public string Password { get; set; }
 
                 [Required]
                 [StringLength(40)]

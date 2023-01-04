@@ -37,6 +37,16 @@ namespace SAASystem.Context
             return mySqlSingleton.Select<UserContextModel>(query, param);
         }
 
+        public UserContextModel Select(string Username)
+        {
+            MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
+            string column = nameof(Username);
+            string value = Username.ToString();
+            string query = QueryHelper.GetSelectQuery(_tableName, column);
+            object param = new { Username = value };
+            return mySqlSingleton.Select<UserContextModel>(query, param);
+        }
+
         public IEnumerable<UserContextModel> SelectAll()
         {
             MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;

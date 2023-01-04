@@ -33,9 +33,20 @@ namespace SAASystem.Singleton
         }
         public string Decrypt(string cipherText)
         {
-            var dataProtectionProvider = DataProtectionProvider.Create(AppName);
-            var protector = dataProtectionProvider.CreateProtector(Key);
-            return protector.Unprotect(cipherText);
+            if (cipherText is null)
+            {
+                return null;
+            }
+            else if (cipherText.Equals(""))
+            {
+                return null;
+            }
+            else
+            {
+                var dataProtectionProvider = DataProtectionProvider.Create(AppName);
+                var protector = dataProtectionProvider.CreateProtector(Key);
+                return protector.Unprotect(cipherText);
+            }
         }
     }
 }
