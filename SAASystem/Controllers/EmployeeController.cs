@@ -6,6 +6,7 @@ using SAASystem.Helper;
 using SAASystem.Models.Component;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
+using SAASystem.Singleton;
 using System.Collections.Generic;
 
 namespace SAASystem.Controllers
@@ -27,19 +28,21 @@ namespace SAASystem.Controllers
         public IActionResult Index()
         {
             EmployeeViewModel.IndexViewModel viewModel = new EmployeeViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = GetItemComponentModels();
+            viewModel.ItemComponentModelEnumerable = EmployeeHelper.GetItemComponentModels();
             return View(viewModel);
         }
         public IActionResult List(string param)
         {
+            EmployeeContextSingleton employeeContextSingleton = EmployeeContextSingleton.Instance;
             EmployeeViewModel.ListViewModel list = new EmployeeViewModel.ListViewModel();
             list.Status = param;
-            list.EmployeeContextModelEnumerable = _employeeContext.SelectAll();
+            list.EmployeeContextModelEnumerable = employeeContextSingleton.SelectAll();
             return View(list);
         }
         public IActionResult Show(int id)
         {
-            EmployeeContextModel contextModel = _employeeContext.Select(id);
+            EmployeeContextSingleton employeeContextSingleton = EmployeeContextSingleton.Instance;
+            EmployeeContextModel contextModel = employeeContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -51,15 +54,18 @@ namespace SAASystem.Controllers
         }
         public IActionResult Edit(int id)
         {
-            EmployeeContextModel contextModel = _employeeContext.Select(id);
+            EmployeeContextSingleton employeeContextSingleton = EmployeeContextSingleton.Instance;
+            EmployeeContextModel contextModel = employeeContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
             }
             else
             {
-                IEnumerable<UserContextModel> userContextModelEnumerable = _userContext.SelectAll();
-                IEnumerable<RoleContextModel> roleContextModelEnumerable = _roleContext.SelectAll();
+                UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
+                RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
+                IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
+                IEnumerable<RoleContextModel> roleContextModelEnumerable = roleContextSingleton.SelectAll();
                 EmployeeViewModel.EditViewModel editViewModel = new EmployeeViewModel.EditViewModel();
                 editViewModel.UserEnumerable = EmployeeHelper.FromUserModelEnumerable(userContextModelEnumerable);
                 editViewModel.RoleEnumerable = EmployeeHelper.FromRoleModelEnumerable(roleContextModelEnumerable);
@@ -73,13 +79,16 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                IEnumerable<UserContextModel> userContextModelEnumerable = _userContext.SelectAll();
-                IEnumerable<RoleContextModel> roleContextModelEnumerable = _roleContext.SelectAll();
+                UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
+                RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
+                IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
+                IEnumerable<RoleContextModel> roleContextModelEnumerable = roleContextSingleton.SelectAll();
                 editViewModel.UserEnumerable = EmployeeHelper.FromUserModelEnumerable(userContextModelEnumerable);
                 editViewModel.RoleEnumerable = EmployeeHelper.FromRoleModelEnumerable(roleContextModelEnumerable);
                 editViewModel.StatusEnumerable = EmployeeHelper.GetIEnumerableSelectListItem<EmployeeStatusEnum>();
                 return View(editViewModel);
             }
+            EmployeeContextSingleton employeeContextSingleton = EmployeeContextSingleton.Instance;
             EmployeeBuilder builder = new EmployeeBuilder();
             EmployeeContextModel contextModel = builder
                 .SetEmployeeId(editViewModel.Form.EmployeeId)
@@ -87,14 +96,16 @@ namespace SAASystem.Controllers
                 .SetRoleId(editViewModel.Form.RoleId)
                 .SetStatus(editViewModel.Form.Status)
                 .Build();
-            _employeeContext.Update(contextModel);
+            employeeContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
         }
         public IActionResult Insert()
         {
+            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
+            RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
             EmployeeViewModel.InsertViewModel insertViewModel = new EmployeeViewModel.InsertViewModel();
-            IEnumerable<UserContextModel> userContextModelEnumerable = _userContext.SelectAll();
-            IEnumerable<RoleContextModel> roleContextModelEnumerable = _roleContext.SelectAll();
+            IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
+            IEnumerable<RoleContextModel> roleContextModelEnumerable = roleContextSingleton.SelectAll();
             insertViewModel.UserEnumerable = EmployeeHelper.FromUserModelEnumerable(userContextModelEnumerable);
             insertViewModel.RoleEnumerable = EmployeeHelper.FromRoleModelEnumerable(roleContextModelEnumerable);
             insertViewModel.StatusEnumerable = EmployeeHelper.GetIEnumerableSelectListItem<EmployeeStatusEnum>();
@@ -106,26 +117,30 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                IEnumerable<UserContextModel> userContextModelEnumerable = _userContext.SelectAll();
-                IEnumerable<RoleContextModel> roleContextModelEnumerable = _roleContext.SelectAll();
+                UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
+                RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
+                IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
+                IEnumerable<RoleContextModel> roleContextModelEnumerable = roleContextSingleton.SelectAll();
                 insertViewModel.UserEnumerable = EmployeeHelper.FromUserModelEnumerable(userContextModelEnumerable);
                 insertViewModel.RoleEnumerable = EmployeeHelper.FromRoleModelEnumerable(roleContextModelEnumerable);
                 insertViewModel.StatusEnumerable = EmployeeHelper.GetIEnumerableSelectListItem<EmployeeStatusEnum>();
                 return View(insertViewModel);
             }
+            EmployeeContextSingleton employeeContextSingleton = EmployeeContextSingleton.Instance;
             EmployeeBuilder builder = new EmployeeBuilder();
             EmployeeContextModel contextModel = builder
                 .SetUserId(insertViewModel.Form.UserId)
                 .SetRoleId(insertViewModel.Form.RoleId)
                 .SetStatus(insertViewModel.Form.Status)
                 .Build();
-            _employeeContext.Insert(contextModel);
+            employeeContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });
         }
 
         public IActionResult Delete(int id)
         {
-            EmployeeContextModel contextModel = _employeeContext.Select(id);
+            EmployeeContextSingleton employeeContextSingleton = EmployeeContextSingleton.Instance;
+            EmployeeContextModel contextModel = employeeContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -143,30 +158,14 @@ namespace SAASystem.Controllers
             }
             try
             {
-                _employeeContext.Delete(deleteViewModel.EmployeeContextModel.EmployeeId);
+                EmployeeContextSingleton employeeContextSingleton = EmployeeContextSingleton.Instance;
+                employeeContextSingleton.Delete(deleteViewModel.EmployeeContextModel.EmployeeId);
                 return RedirectToAction(nameof(List), new { Param = "SuccessDelete" });
             }
             catch
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorConstraint" });
             }
-        }
-        private IEnumerable<ItemComponentModel> GetItemComponentModels()
-        {
-            List<ItemComponentModel> itemModelList = new List<ItemComponentModel>();
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "Insert",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Employee", Action = "Insert" },
-                ImageUrl = "/icon/insert.jpg"
-            });
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "List",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Employee", Action = "List" },
-                ImageUrl = "/icon/list.jpg"
-            });
-            return itemModelList;
         }
     }
 }
