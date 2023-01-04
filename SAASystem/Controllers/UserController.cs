@@ -1,36 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
-using SAASystem.Context.Interface;
-using SAASystem.Models.Component;
+using SAASystem.Helper;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
-using System.Collections.Generic;
+using SAASystem.Singleton;
 
 namespace SAASystem.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserContext _userContext;
-        public UserController(IUserContext userContext)
-        {
-            _userContext = userContext;
-        }
         public IActionResult Index()
         {
             UserViewModel.IndexViewModel viewModel = new UserViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = GetItemComponentModels();
+            viewModel.ItemComponentModelEnumerable = UserHelper.GetItemComponentModels();
             return View(viewModel);
         }
         public IActionResult List(string param)
         {
+            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
             UserViewModel.ListViewModel list = new UserViewModel.ListViewModel();
             list.Status = param;
-            list.UserContextModelEnumerable = _userContext.SelectAll();
+            list.UserContextModelEnumerable = userContextSingleton.SelectAll();
             return View(list);
         }
         public IActionResult Show(int id)
         {
-            UserContextModel contextModel = _userContext.Select(id);
+            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
+            UserContextModel contextModel = userContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -42,7 +38,8 @@ namespace SAASystem.Controllers
         }
         public IActionResult Edit(int id)
         {
-            UserContextModel contextModel = _userContext.Select(id);
+            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
+            UserContextModel contextModel = userContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -61,6 +58,7 @@ namespace SAASystem.Controllers
             {
                 return View(editViewModel);
             }
+            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
             UserBuilder builder = new UserBuilder();
             UserContextModel contextModel = builder
                 .SetUserId(editViewModel.Form.UserId)
@@ -71,7 +69,7 @@ namespace SAASystem.Controllers
                 .SetGivenName(editViewModel.Form.GivenName)
                 .SetAddress(editViewModel.Form.Address)
                 .Build();
-            _userContext.Update(contextModel);
+            userContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
         }
         public IActionResult Insert()
@@ -87,6 +85,7 @@ namespace SAASystem.Controllers
             {
                 return View(insertViewModel);
             }
+            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
             UserBuilder builder = new UserBuilder();
             UserContextModel contextModel = builder
                 .SetUsername(insertViewModel.Form.Username)
@@ -96,13 +95,14 @@ namespace SAASystem.Controllers
                 .SetGivenName(insertViewModel.Form.GivenName)
                 .SetAddress(insertViewModel.Form.Address)
                 .Build();
-            _userContext.Insert(contextModel);
+            userContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });
         }
 
         public IActionResult Delete(int id)
         {
-            UserContextModel contextModel = _userContext.Select(id);
+            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
+            UserContextModel contextModel = userContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -120,30 +120,14 @@ namespace SAASystem.Controllers
             }
             try
             {
-                _userContext.Delete(deleteViewModel.UserContextModel.UserId);
+                UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
+                userContextSingleton.Delete(deleteViewModel.UserContextModel.UserId);
                 return RedirectToAction(nameof(List), new { Param = "SuccessDelete" });
             }
             catch
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorConstraint" });
             }
-        }
-        private IEnumerable<ItemComponentModel> GetItemComponentModels()
-        {
-            List<ItemComponentModel> itemModelList = new List<ItemComponentModel>();
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "Insert",
-                Route = new ItemComponentModel.RouteModel() { Controller = "User", Action = "Insert" },
-                ImageUrl = "/icon/insert.jpg"
-            });
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "List",
-                Route = new ItemComponentModel.RouteModel() { Controller = "User", Action = "List" },
-                ImageUrl = "/icon/list.jpg"
-            });
-            return itemModelList;
         }
     }
 }
