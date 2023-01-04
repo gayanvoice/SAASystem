@@ -9,7 +9,7 @@ namespace SAASystem.Controllers
         public IActionResult Index()
         {
             HomeViewModel.IndexViewModel indexViewModel = new HomeViewModel.IndexViewModel();
-            indexViewModel.ItemComponentModelEnumerable = HomeControllerHelper.GetIndexItemComponentModels();
+            indexViewModel.ItemComponentModelEnumerable = HomeHelper.GetIndexItemComponentModels();
             return View(indexViewModel);
         }
     }

@@ -1,36 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
-using SAASystem.Context.Interface;
-using SAASystem.Models.Component;
+using SAASystem.Helper;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
-using System.Collections.Generic;
+using SAASystem.Singleton;
 
 namespace SAASystem.Controllers
 {
     public class SuiteController : Controller
     {
-        private readonly ISuiteContext _suiteContext;
-        public SuiteController(ISuiteContext suiteContext)
-        {
-            _suiteContext = suiteContext;
-        }
         public IActionResult Index()
         {
             SuiteViewModel.IndexViewModel viewModel = new SuiteViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = GetItemComponentModels();
+            viewModel.ItemComponentModelEnumerable = SuiteHelper.GetItemComponentModels();
             return View(viewModel);
         }
         public IActionResult List(string param)
         {
+            SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
             SuiteViewModel.ListViewModel list = new SuiteViewModel.ListViewModel();
             list.Status = param;
-            list.SuiteContextModelEnumerable = _suiteContext.SelectAll();
+            list.SuiteContextModelEnumerable = suiteContextSingleton.SelectAll();
             return View(list);
         }
         public IActionResult Show(int id)
         {
-            SuiteContextModel contextModel = _suiteContext.Select(id);
+            SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
+            SuiteContextModel contextModel = suiteContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -42,7 +38,8 @@ namespace SAASystem.Controllers
         }
         public IActionResult Edit(int id)
         {
-            SuiteContextModel contextModel = _suiteContext.Select(id);
+            SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
+            SuiteContextModel contextModel = suiteContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -61,6 +58,7 @@ namespace SAASystem.Controllers
             {
                 return View(editViewModel);
             }
+            SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
             SuiteBuilder builder = new SuiteBuilder();
             SuiteContextModel contextModel = builder
                 .SetSuiteId(editViewModel.Form.SuiteId)
@@ -71,7 +69,7 @@ namespace SAASystem.Controllers
                 .SetDaysAvailable(editViewModel.Form.DaysAvailable)
                 .SetMaximumStay(editViewModel.Form.MaximumStay)
                 .Build();
-            _suiteContext.Update(contextModel);
+            suiteContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
         }
         public IActionResult Insert()
@@ -87,6 +85,7 @@ namespace SAASystem.Controllers
             {
                 return View(insertViewModel);
             }
+            SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
             SuiteBuilder builder = new SuiteBuilder();
             SuiteContextModel contextModel = builder
                 .SetName(insertViewModel.Form.Name)
@@ -96,13 +95,14 @@ namespace SAASystem.Controllers
                 .SetDaysAvailable(insertViewModel.Form.DaysAvailable)
                 .SetMaximumStay(insertViewModel.Form.MaximumStay)
                 .Build();
-            _suiteContext.Insert(contextModel);
+            suiteContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });
         }
 
         public IActionResult Delete(int id)
         {
-            SuiteContextModel contextModel = _suiteContext.Select(id);
+            SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
+            SuiteContextModel contextModel = suiteContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -120,30 +120,14 @@ namespace SAASystem.Controllers
             }
             try
             {
-                _suiteContext.Delete(deleteViewModel.SuiteContextModel.SuiteId);
+                SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
+                suiteContextSingleton.Delete(deleteViewModel.SuiteContextModel.SuiteId);
                 return RedirectToAction(nameof(List), new { Param = "SuccessDelete" });
             }
             catch
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorConstraint" });
             }
-        }
-        private IEnumerable<ItemComponentModel> GetItemComponentModels()
-        {
-            List<ItemComponentModel> itemModelList = new List<ItemComponentModel>();
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "Insert",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Suite", Action = "Insert" },
-                ImageUrl = "/icon/insert.jpg"
-            });
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "List",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Suite", Action = "List" },
-                ImageUrl = "/icon/list.jpg"
-            });
-            return itemModelList;
         }
     }
 }

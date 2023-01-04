@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SAASystem.Helper
 {
-    public class HomeControllerHelper
+    public class HomeHelper
     {
         public static IEnumerable<ItemComponentModel> GetIndexItemComponentModels()
         {

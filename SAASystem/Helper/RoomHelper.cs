@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace SAASystem.Helper
 {
-    public class RoomControllerHelper
+    public class RoomHelper
     {
         public static IEnumerable<SelectListItem> GetIEnumerableSelectListItem<TEnum>()
          where TEnum : struct, IConvertible, IComparable, IFormattable

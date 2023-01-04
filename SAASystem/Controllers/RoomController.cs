@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
-using SAASystem.Context.Interface;
 using SAASystem.Enum;
 using SAASystem.Helper;
-using SAASystem.Models.Component;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
 using SAASystem.Singleton;
@@ -16,7 +14,7 @@ namespace SAASystem.Controllers
         public IActionResult Index()
         {
             RoomViewModel.IndexViewModel viewModel = new RoomViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = RoomControllerHelper.GetItemComponentModels();
+            viewModel.ItemComponentModelEnumerable = RoomHelper.GetItemComponentModels();
             return View(viewModel);
         }
         public IActionResult List(string param)
@@ -53,8 +51,8 @@ namespace SAASystem.Controllers
                 ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
                 IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
                 RoomViewModel.EditViewModel editViewModel = new RoomViewModel.EditViewModel();
-                editViewModel.ApartmentEnumerable = RoomControllerHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-                editViewModel.StatusEnumerable = RoomControllerHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
+                editViewModel.ApartmentEnumerable = RoomHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
+                editViewModel.StatusEnumerable = RoomHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
                 editViewModel.Form = RoomViewModel.EditViewModel.FormViewModel.FromContextModel(contextModel);
                 return View(editViewModel);
             }
@@ -66,8 +64,8 @@ namespace SAASystem.Controllers
             {
                 ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
                 IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
-                editViewModel.ApartmentEnumerable = RoomControllerHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-                editViewModel.StatusEnumerable = RoomControllerHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
+                editViewModel.ApartmentEnumerable = RoomHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
+                editViewModel.StatusEnumerable = RoomHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
                 return View(editViewModel);
             }
             RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
@@ -85,8 +83,8 @@ namespace SAASystem.Controllers
             ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             RoomViewModel.InsertViewModel insertViewModel = new RoomViewModel.InsertViewModel();
             IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
-            insertViewModel.ApartmentEnumerable = RoomControllerHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-            insertViewModel.StatusEnumerable = RoomControllerHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
+            insertViewModel.ApartmentEnumerable = RoomHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
+            insertViewModel.StatusEnumerable = RoomHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
             insertViewModel.Form = new RoomViewModel.InsertViewModel.FormViewModel();
             return View(insertViewModel);
         }
@@ -97,8 +95,8 @@ namespace SAASystem.Controllers
             {
                 ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
                 IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
-                insertViewModel.ApartmentEnumerable = RoomControllerHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-                insertViewModel.StatusEnumerable = RoomControllerHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
+                insertViewModel.ApartmentEnumerable = RoomHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
+                insertViewModel.StatusEnumerable = RoomHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
                 return View(insertViewModel);
             }
             RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;

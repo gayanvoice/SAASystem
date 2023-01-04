@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SAASystem.Helper
 {
-    public class PropertyControllerHelper
+    public class RoleHelper
     {
         public static IEnumerable<ItemComponentModel> GetItemComponentModels()
         {
@@ -11,13 +11,13 @@ namespace SAASystem.Helper
             itemModelList.Add(new ItemComponentModel()
             {
                 Name = "Insert",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Property", Action = "Insert" },
+                Route = new ItemComponentModel.RouteModel() { Controller = "Role", Action = "Insert" },
                 ImageUrl = "/icon/insert.jpg"
             });
             itemModelList.Add(new ItemComponentModel()
             {
                 Name = "List",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Property", Action = "List" },
+                Route = new ItemComponentModel.RouteModel() { Controller = "Role", Action = "List" },
                 ImageUrl = "/icon/list.jpg"
             });
             return itemModelList;

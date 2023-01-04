@@ -1,40 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
-using SAASystem.Context.Interface;
 using SAASystem.Enum;
 using SAASystem.Helper;
-using SAASystem.Models.Component;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
+using SAASystem.Singleton;
 using System.Collections.Generic;
 
 namespace SAASystem.Controllers
 {
     public class StockController : Controller
     {
-        private readonly IStockContext _stockContext;
-        private readonly IApartmentContext _apartmentContext;
-        public StockController(IStockContext stockContext, IApartmentContext apartmentContext)
-        {
-            _stockContext = stockContext;
-            _apartmentContext = apartmentContext;
-        }
         public IActionResult Index()
         {
             StockViewModel.IndexViewModel viewModel = new StockViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = GetItemComponentModels();
+            viewModel.ItemComponentModelEnumerable = StockHelper.GetItemComponentModels();
             return View(viewModel);
         }
         public IActionResult List(string param)
         {
+            StockContextSingleton stockContextSingleton = StockContextSingleton.Instance;
             StockViewModel.ListViewModel list = new StockViewModel.ListViewModel();
             list.Status = param;
-            list.StockContextModelEnumerable = _stockContext.SelectAll();
+            list.StockContextModelEnumerable = stockContextSingleton.SelectAll();
             return View(list);
         }
         public IActionResult Show(int id)
         {
-            StockContextModel contextModel = _stockContext.Select(id);
+            StockContextSingleton stockContextSingleton = StockContextSingleton.Instance;
+            StockContextModel contextModel = stockContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -46,14 +40,16 @@ namespace SAASystem.Controllers
         }
         public IActionResult Edit(int id)
         {
-            StockContextModel contextModel = _stockContext.Select(id);
+            StockContextSingleton stockContextSingleton = StockContextSingleton.Instance;
+            StockContextModel contextModel = stockContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
             }
             else
             {
-                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = _apartmentContext.SelectAll();
+                ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
+                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
                 StockViewModel.EditViewModel editViewModel = new StockViewModel.EditViewModel();
                 editViewModel.ApartmentEnumerable = StockHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
                 editViewModel.StatusEnumerable = StockHelper.GetIEnumerableSelectListItem<StockStatusEnum>();
@@ -66,11 +62,13 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = _apartmentContext.SelectAll();
+                ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
+                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
                 editViewModel.ApartmentEnumerable = StockHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
                 editViewModel.StatusEnumerable = StockHelper.GetIEnumerableSelectListItem<StockStatusEnum>();
                 return View(editViewModel);
             }
+            StockContextSingleton stockContextSingleton = StockContextSingleton.Instance;
             StockBuilder builder = new StockBuilder();
             StockContextModel contextModel = builder
                 .SetStockId(editViewModel.Form.StockId)
@@ -78,13 +76,14 @@ namespace SAASystem.Controllers
                 .SetName(editViewModel.Form.Name)
                 .SetStatus(editViewModel.Form.Status)
                 .Build();
-            _stockContext.Update(contextModel);
+            stockContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
         }
         public IActionResult Insert()
         {
+            ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             StockViewModel.InsertViewModel insertViewModel = new StockViewModel.InsertViewModel();
-            IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = _apartmentContext.SelectAll();
+            IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
             insertViewModel.ApartmentEnumerable = StockHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
             insertViewModel.StatusEnumerable = StockHelper.GetIEnumerableSelectListItem<StockStatusEnum>();
             insertViewModel.Form = new StockViewModel.InsertViewModel.FormViewModel();
@@ -95,24 +94,27 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = _apartmentContext.SelectAll();
+                ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
+                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
                 insertViewModel.ApartmentEnumerable = StockHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
                 insertViewModel.StatusEnumerable = StockHelper.GetIEnumerableSelectListItem<StockStatusEnum>();
                 return View(insertViewModel);
             }
+            StockContextSingleton stockContextSingleton = StockContextSingleton.Instance;
             StockBuilder builder = new StockBuilder();
             StockContextModel contextModel = builder
                 .SetApartmentId(insertViewModel.Form.ApartmentId)
                 .SetName(insertViewModel.Form.Name)
                 .SetStatus(insertViewModel.Form.Status)
                 .Build();
-            _stockContext.Insert(contextModel);
+            stockContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });
         }
 
         public IActionResult Delete(int id)
         {
-            StockContextModel contextModel = _stockContext.Select(id);
+            StockContextSingleton stockContextSingleton = StockContextSingleton.Instance;
+            StockContextModel contextModel = stockContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -130,7 +132,8 @@ namespace SAASystem.Controllers
             }
             try
             {
-                _stockContext.Delete(deleteViewModel.StockContextModel.StockId);
+                StockContextSingleton stockContextSingleton = StockContextSingleton.Instance;
+                stockContextSingleton.Delete(deleteViewModel.StockContextModel.StockId);
                 return RedirectToAction(nameof(List), new { Param = "SuccessDelete" });
             }
             catch
@@ -138,22 +141,6 @@ namespace SAASystem.Controllers
                 return RedirectToAction(nameof(List), new { Param = "ErrorConstraint" });
             }
         }
-        private IEnumerable<ItemComponentModel> GetItemComponentModels()
-        {
-            List<ItemComponentModel> itemModelList = new List<ItemComponentModel>();
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "Insert",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Stock", Action = "Insert" },
-                ImageUrl = "/icon/insert.jpg"
-            });
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "List",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Stock", Action = "List" },
-                ImageUrl = "/icon/list.jpg"
-            });
-            return itemModelList;
-        }
+      
     }
 }

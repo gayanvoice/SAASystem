@@ -12,7 +12,7 @@ namespace SAASystem.Controllers
         public IActionResult Index()
         {
             PropertyViewModel.IndexViewModel viewModel = new PropertyViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = PropertyControllerHelper.GetItemComponentModels();
+            viewModel.ItemComponentModelEnumerable = PropertyHelper.GetItemComponentModels();
             return View(viewModel);
         }
         public IActionResult List(string param)
