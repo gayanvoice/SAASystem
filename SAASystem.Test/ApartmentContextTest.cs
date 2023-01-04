@@ -7,6 +7,8 @@ using Xunit;
 
 namespace SAASystem.Test
 {
+    /// <summary>
+    /// ApartmentContextTest.cs executes the tests to check if each database function returns view
     public class ApartmentContextTest
     {
         [Fact]

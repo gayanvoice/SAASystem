@@ -4,6 +4,8 @@ using Xunit;
 
 namespace SAASystem.Test
 {
+    /// <summary>
+    /// ApartmentControllerTest.cs executes the tests to check if each action returns view
     public class ApartmentControllerTest
     {
         private readonly ApartmentController _controller;

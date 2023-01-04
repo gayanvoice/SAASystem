@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Moq;
-using SAASystem.Context.Interface;
 using SAASystem.Controllers;
-using SAASystem.Models.Context;
 using Xunit;
 
 namespace SAASystem.Test
 {
+    /// <summary>
+    /// ContractControllerTest.cs executes the tests to check if each action returns view
     public class ContractControllerTest
     {
         private readonly ContractController _controller;
@@ -32,7 +31,7 @@ namespace SAASystem.Test
         [Fact]
         public void Show_ReturnView()
         {
-            var result = _controller.Show(2);
+            var result = _controller.Show(1);
             Assert.IsType<RedirectToActionResult>(result);
         }
         [Fact]
