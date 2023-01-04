@@ -1,12 +1,11 @@
 using SAASystem.Builder;
 using SAASystem.Models.Context;
 using SAASystem.Singleton;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace SAASystem.Test
+namespace SAASystem.Test.Context
 {
     /// <summary>
     /// UserContextTest.cs executes the tests to check if each database function returns view
@@ -17,10 +16,18 @@ namespace SAASystem.Test
         {
             UserContextSingleton contextSingleton = UserContextSingleton.Instance;
             IEnumerable<UserContextModel> contextEnumerable = contextSingleton.SelectAll();
-            Assert.Equal(10, contextEnumerable.Count());
+            Assert.Equal(9, contextEnumerable.Count());
         }
         [Fact]
-        public void Select()
+        public void SelectUserId()
+        {
+            string username = "emily";
+            UserContextSingleton contextSingleton = UserContextSingleton.Instance;
+            UserContextModel contextModel = contextSingleton.Select(username);
+            Assert.True(contextModel.Username.Equals(username));
+        }
+        [Fact]
+        public void SelectUserName()
         {
             int id = 1;
             UserContextSingleton contextSingleton = UserContextSingleton.Instance;

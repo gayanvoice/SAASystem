@@ -2,17 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 using SAASystem.Controllers;
 using Xunit;
 
-namespace SAASystem.Test
+namespace SAASystem.Test.Controller
 {
     /// <summary>
-    /// ContractControllerTest.cs executes the tests to check if each action returns view
-    public class ContractControllerTest
+    /// TenantControllerTest.cs executes the tests to check if each action returns view
+    public class TenantControllerTest
     {
-        private readonly ContractController _controller;
+        private readonly TenantController _controller;
 
-        public ContractControllerTest()
+        public TenantControllerTest()
         {
-            _controller = new ContractController();
+            _controller = new TenantController();
         }
 
         [Fact]

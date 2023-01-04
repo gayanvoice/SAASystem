@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace SAASystem.Test
+namespace SAASystem.Test.Context
 {
     /// <summary>
     /// ApartmentContextTest.cs executes the tests to check if each database function returns view

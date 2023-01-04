@@ -1,12 +1,11 @@
 using SAASystem.Builder;
 using SAASystem.Models.Context;
 using SAASystem.Singleton;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace SAASystem.Test
+namespace SAASystem.Test.Context
 {
     /// <summary>
     /// RoleContextTest.cs executes the tests to check if each database function returns view

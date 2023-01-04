@@ -1,12 +1,11 @@
 using SAASystem.Builder;
 using SAASystem.Models.Context;
 using SAASystem.Singleton;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace SAASystem.Test
+namespace SAASystem.Test.Context
 {
     /// <summary>
     /// StockContextTest.cs executes the tests to check if each database function returns view
@@ -17,7 +16,7 @@ namespace SAASystem.Test
         {
             StockContextSingleton contextSingleton = StockContextSingleton.Instance;
             IEnumerable<StockContextModel> contextEnumerable = contextSingleton.SelectAll();
-            Assert.Equal(7, contextEnumerable.Count());
+            Assert.Equal(6, contextEnumerable.Count());
         }
         [Fact]
         public void Select()

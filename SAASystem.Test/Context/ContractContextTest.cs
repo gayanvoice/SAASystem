@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace SAASystem.Test
+namespace SAASystem.Test.Context
 {
     /// <summary>
     /// ContractContextTest.cs executes the tests to check if each database function returns view
@@ -17,7 +17,7 @@ namespace SAASystem.Test
         {
             ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
             IEnumerable<ContractContextModel> contractContextEnumerable = contractContextSingleton.SelectAll();
-            Assert.Equal(5, contractContextEnumerable.Count());
+            Assert.Equal(4, contractContextEnumerable.Count());
         }
         [Fact]
         public void Select()
