@@ -1,36 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
-using SAASystem.Context.Interface;
-using SAASystem.Models.Component;
+using SAASystem.Helper;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
-using System.Collections.Generic;
+using SAASystem.Singleton;
 
 namespace SAASystem.Controllers
 {
     public class PropertyController : Controller
     {
-        private readonly IPropertyContext _propertyContext;
-        public PropertyController(IPropertyContext propertyContext)
-        {
-            _propertyContext = propertyContext;
-        }
         public IActionResult Index()
         {
             PropertyViewModel.IndexViewModel viewModel = new PropertyViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = GetItemComponentModels();
+            viewModel.ItemComponentModelEnumerable = PropertyControllerHelper.GetItemComponentModels();
             return View(viewModel);
         }
         public IActionResult List(string param)
         {
+            PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
             PropertyViewModel.ListViewModel list = new PropertyViewModel.ListViewModel();
             list.Status = param;
-            list.PropertyContextModelEnumerable = _propertyContext.SelectAll();
+            list.PropertyContextModelEnumerable = propertyContextSingleton.SelectAll();
             return View(list);
         }
         public IActionResult Show(int id)
         {
-            PropertyContextModel contextModel = _propertyContext.Select(id);
+            PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
+            PropertyContextModel contextModel = propertyContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -42,7 +38,8 @@ namespace SAASystem.Controllers
         }
         public IActionResult Edit(int id)
         {
-            PropertyContextModel contextModel = _propertyContext.Select(id);
+            PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
+            PropertyContextModel contextModel = propertyContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -61,6 +58,7 @@ namespace SAASystem.Controllers
             {
                 return View(editViewModel);
             }
+            PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
             PropertyBuilder builder = new PropertyBuilder();
             PropertyContextModel contextModel = builder
                 .SetPropertyId(editViewModel.Form.PropertyId)
@@ -70,7 +68,7 @@ namespace SAASystem.Controllers
                 .SetPostalCode(editViewModel.Form.PostCode)
                 .SetStreet(editViewModel.Form.Street)
                 .Build();
-            _propertyContext.Update(contextModel);
+            propertyContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
         }
         public IActionResult Insert()
@@ -86,6 +84,7 @@ namespace SAASystem.Controllers
             {
                 return View(insertViewModel);
             }
+            PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
             PropertyBuilder builder = new PropertyBuilder();
             PropertyContextModel contextModel = builder
                 .SetAddress(insertViewModel.Form.Address)
@@ -94,13 +93,13 @@ namespace SAASystem.Controllers
                 .SetPostalCode(insertViewModel.Form.PostCode)
                 .SetStreet(insertViewModel.Form.Street)
                 .Build();
-            _propertyContext.Insert(contextModel);
+            propertyContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });
         }
-
         public IActionResult Delete(int id)
         {
-            PropertyContextModel contextModel = _propertyContext.Select(id);
+            PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
+            PropertyContextModel contextModel = propertyContextSingleton.Select(id);
             if (contextModel is null)
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorNoId" });
@@ -118,30 +117,14 @@ namespace SAASystem.Controllers
             }
             try
             {
-                _propertyContext.Delete(deleteViewModel.PropertyContextModel.PropertyId);
+                PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
+                propertyContextSingleton.Delete(deleteViewModel.PropertyContextModel.PropertyId);
                 return RedirectToAction(nameof(List), new { Param = "SuccessDelete" });
             }
             catch
             {
                 return RedirectToAction(nameof(List), new { Param = "ErrorConstraint" });
             }
-        }
-        private IEnumerable<ItemComponentModel> GetItemComponentModels()
-        {
-            List<ItemComponentModel> itemModelList = new List<ItemComponentModel>();
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "Insert",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Property", Action = "Insert" },
-                ImageUrl = "/icon/insert.jpg"
-            });
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "List",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Property", Action = "List" },
-                ImageUrl = "/icon/list.jpg"
-            });
-            return itemModelList;
         }
     }
 }

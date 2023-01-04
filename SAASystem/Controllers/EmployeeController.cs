@@ -13,18 +13,6 @@ namespace SAASystem.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly IEmployeeContext _employeeContext;
-        private readonly IUserContext _userContext;
-        private readonly IRoleContext _roleContext;
-        public EmployeeController(
-            IEmployeeContext employeeContext,
-            IUserContext userContext,
-            IRoleContext roleContext)
-        {
-            _employeeContext = employeeContext;
-            _userContext = userContext;
-            _roleContext = roleContext;
-        }
         public IActionResult Index()
         {
             EmployeeViewModel.IndexViewModel viewModel = new EmployeeViewModel.IndexViewModel();
