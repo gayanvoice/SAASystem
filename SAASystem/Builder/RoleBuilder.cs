@@ -28,16 +28,6 @@ namespace SAASystem.Builder
             _contextModel.Name = name;
             return this;
         }
-        public RoleBuilder SetWorkHours(double workHours)
-        {
-            _contextModel.WorkHours = workHours;
-            return this;
-        }
-        public RoleBuilder SetPayHour(double payHour)
-        {
-            _contextModel.PayHour = payHour;
-            return this;
-        }
         public RoleContextModel Build()
         {
             RoleContextModel model = _contextModel;

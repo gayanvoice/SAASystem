@@ -1,9 +1,9 @@
 ﻿@using System.Reflection;
 @using SAASystem.Models.Context;
+@using SAASystem.Enum;
 @model SAASystem.Models.View.ApartmentViewModel.ListViewModel
 @{
     ViewData["Title"] = "List";
-    string controller = "Apartment";
 }
 @section CSS
 {
@@ -15,43 +15,43 @@
         if (Model.Status.Equals("ErrorNoId"))
         {
             <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                <strong>Error</strong> Requested @controller Id does not exist!
+                <strong>Error</strong> Requested Apartment Id does not exist!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
         if (Model.Status.Equals("SuccessEdit"))
         {
             <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                <strong>Success</strong> @controller is updated successfully!
+                <strong>Success</strong> Apartment is updated successfully!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
         if (Model.Status.Equals("SuccessInsert"))
         {
-            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                <strong>Success</strong>  @controller is inserted successfully!
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+        <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <strong>Success</strong>  Apartment is inserted successfully!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 
         }
         if (Model.Status.Equals("SuccessDelete"))
         {
             <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                <strong>Success</strong> @controller is deleted successfully!
+                <strong>Success</strong> Apartment is deleted successfully!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
         }
         if (Model.Status.Equals("ErrorConstraint"))
         {
-            <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                <strong>Error</strong> Can not delete @controller due to foriegn key constraint
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
+<div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+    <strong>Error</strong> Can not delete Apartment due to foriegn key constraint
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 
         }
     }
-    <h2 class="pb-2 border-bottom"><a asp-controller="@controller" asp-action="Index" class="text-decoration-none">Index</a> / List</h2>
+    <h2 class="pb-2 border-bottom"><a asp-controller="Apartment" asp-action="Index" class="text-decoration-none">Index</a> / List</h2>
 
     <div class="g-4 py-5">
         @if (Model.ApartmentContextModelEnumerable.Count() > 0)
@@ -74,25 +74,26 @@
                         @{
                             foreach (ApartmentContextModel contextModel in Model.ApartmentContextModelEnumerable)
                             {
-                                int id = contextModel.ApartmentId;
-                                <tr>
+                                string rowColor = "table-primary";
+                                if (contextModel.Status.Equals(ApartmentStatusEnum.DISABLE.ToString())) rowColor = "table-danger";
+                                <tr class="@rowColor">
                                     @foreach (PropertyInfo propertyInfo in contextModel.GetType().GetProperties().Take(4))
                                     {
                                         <td>@propertyInfo.GetValue(contextModel, null)</td>
                                     }
                                     <td>
 
-                                        <a asp-controller="@controller"
+                                        <a asp-controller="Apartment"
                                            asp-action="Show"
-                                           asp-route-Id="@id"
+                                           asp-route-Id="@contextModel.ApartmentId"
                                            class="text-decoration-none p-1">Show</a>
-                                        <a asp-controller="@controller"
+                                        <a asp-controller="Apartment"
                                            asp-action="Edit"
-                                           asp-route-Id="@id"
+                                           asp-route-Id="@contextModel.ApartmentId"
                                            class="text-decoration-none p-1">Edit</a>
-                                        <a asp-controller="@controller"
+                                        <a asp-controller="Apartment"
                                            asp-action="Delete"
-                                           asp-route-Id="@id"
+                                           asp-route-Id="@contextModel.ApartmentId"
                                            class="text-decoration-none p-1">Delete</a>
                                     </td>
                                 </tr>

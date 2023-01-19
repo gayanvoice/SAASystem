@@ -27,7 +27,7 @@ namespace SAASystem.Test.Context
             ContractContextModel contractContextModelTest = builder
                 .SetContractId(contractId)
                 .SetRoomId(2)
-                .SetTenantId(104)
+                //.SetUserId(104)
                 .SetDateTimeContractFrom(new DateTime(2022, 01, 01))
                 .SetDateTimeContractTo(new DateTime(2023, 01, 01))
                 .SetDepositAmount(50)
@@ -43,7 +43,7 @@ namespace SAASystem.Test.Context
             ContractBuilder builder = new ContractBuilder();
             ContractContextModel contractContextModelTest = builder
                 .SetRoomId(2)
-                .SetTenantId(104)
+                //.SetTenantId(104)
                 .SetDateTimeContractFrom(DateTime.Now)
                 .SetDateTimeContractTo(DateTime.Now)
                 .SetDepositAmount(50)
@@ -69,7 +69,7 @@ namespace SAASystem.Test.Context
             ContractContextModel contractContextModelTest = builder
                 .SetContractId(contractContextModel.ContractId)
                 .SetRoomId(contractContextModel.RoomId)
-                .SetTenantId(contractContextModel.TenantId)
+                //.SetTenantId(contractContextModel.TenantId)
                 .SetDateTimeContractFrom(contractContextModel.DateTimeContractFrom)
                 .SetDateTimeContractTo(contractContextModel.DateTimeContractTo)
                 .SetDepositAmount(contractContextModel.DepositAmount)

@@ -4,7 +4,6 @@ using SAASystem.Helper;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
 using SAASystem.Singleton;
-using System.Collections.Generic;
 
 namespace SAASystem.Controllers
 {
@@ -40,8 +39,6 @@ namespace SAASystem.Controllers
         public IActionResult Edit(int id)
         {
             ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
-            PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
-            SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
             ApartmentContextModel contextModel = apartmentContextSingleton.Select(id);
             if (contextModel is null)
             {
@@ -49,13 +46,9 @@ namespace SAASystem.Controllers
             }
             else
             {
-                IEnumerable<PropertyContextModel> propertyContextModelEnumerable = propertyContextSingleton.SelectAll();
-                IEnumerable<SuiteContextModel> suiteContextModelEnumerable = suiteContextSingleton.SelectAll();
                 ApartmentViewModel.EditViewModel editViewModel = new ApartmentViewModel.EditViewModel();
-                editViewModel.PropertyEnumerable = ApartmentHelper.FromPropertyModelEnumerable(propertyContextModelEnumerable);
-                editViewModel.SuiteEnumerable = ApartmentHelper.FromSuiteModelEnumerable(suiteContextModelEnumerable);
                 editViewModel.Form = ApartmentViewModel.EditViewModel.FormViewModel.FromContextModel(contextModel);
-                return View(editViewModel);
+                return View(ApartmentHelper.GenerateView(editViewModel));
             }
         }
         [HttpPost]
@@ -63,13 +56,7 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
-                SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
-                IEnumerable<PropertyContextModel> propertyContextModelEnumerable = propertyContextSingleton.SelectAll();
-                IEnumerable<SuiteContextModel> suiteContextModelEnumerable = suiteContextSingleton.SelectAll();
-                editViewModel.PropertyEnumerable = ApartmentHelper.FromPropertyModelEnumerable(propertyContextModelEnumerable);
-                editViewModel.SuiteEnumerable = ApartmentHelper.FromSuiteModelEnumerable(suiteContextModelEnumerable);
-                return View(editViewModel);
+                return View(ApartmentHelper.GenerateView(editViewModel));
             }
             ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             ApartmentBuilder builder = new ApartmentBuilder();
@@ -78,34 +65,23 @@ namespace SAASystem.Controllers
                 .SetPropertyId(editViewModel.Form.PropertyId)
                 .SetSuiteId(editViewModel.Form.SuiteId)
                 .SetCode(editViewModel.Form.Code)
+                .SetStatus(editViewModel.Form.Status)
                 .Build();
             apartmentContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
         }
         public IActionResult Insert()
         {
-            PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
-            SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
-            IEnumerable<PropertyContextModel> propertyContextModelEnumerable = propertyContextSingleton.SelectAll();
-            IEnumerable<SuiteContextModel> suiteContextModelEnumerable = suiteContextSingleton.SelectAll();
             ApartmentViewModel.InsertViewModel insertViewModel = new ApartmentViewModel.InsertViewModel();
-            insertViewModel.PropertyEnumerable = ApartmentHelper.FromPropertyModelEnumerable(propertyContextModelEnumerable);
-            insertViewModel.SuiteEnumerable = ApartmentHelper.FromSuiteModelEnumerable(suiteContextModelEnumerable);
             insertViewModel.Form = new ApartmentViewModel.InsertViewModel.FormViewModel();
-            return View(insertViewModel);
+            return View(ApartmentHelper.GenerateView(insertViewModel));
         }
         [HttpPost]
         public IActionResult Insert(ApartmentViewModel.InsertViewModel insertViewModel)
         {
             if (!ModelState.IsValid)
             {
-                PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
-                SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
-                IEnumerable<PropertyContextModel> propertyContextModelEnumerable = propertyContextSingleton.SelectAll();
-                IEnumerable<SuiteContextModel> suiteContextModelEnumerable = suiteContextSingleton.SelectAll();
-                insertViewModel.PropertyEnumerable = ApartmentHelper.FromPropertyModelEnumerable(propertyContextModelEnumerable);
-                insertViewModel.SuiteEnumerable = ApartmentHelper.FromSuiteModelEnumerable(suiteContextModelEnumerable);
-                return View(insertViewModel);
+                return View(ApartmentHelper.GenerateView(insertViewModel));
             }
             ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             ApartmentBuilder builder = new ApartmentBuilder();
@@ -113,6 +89,7 @@ namespace SAASystem.Controllers
                 .SetPropertyId(insertViewModel.Form.PropertyId)
                 .SetSuiteId(insertViewModel.Form.SuiteId)
                 .SetCode(insertViewModel.Form.Code)
+                .SetStatus(insertViewModel.Form.Status)
                 .Build();
             apartmentContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });

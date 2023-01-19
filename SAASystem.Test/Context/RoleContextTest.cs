@@ -36,8 +36,8 @@ namespace SAASystem.Test.Context
 
             contextModelTest = builder
                .SetName("TEMP_NAME")
-                .SetWorkHours(40)
-                .SetPayHour(15)
+                //.SetWorkHours(40)
+                //.SetPayHour(15)
                 .Build();
 
             RoleContextSingleton contextSingleton = RoleContextSingleton.Instance;
@@ -66,8 +66,8 @@ namespace SAASystem.Test.Context
             contextModelTest = builder
                 .SetRoleId(contextModelLast.RoleId)
                 .SetName("TEMP_UPDATE")
-                .SetWorkHours(40)
-                .SetPayHour(20)
+                //.SetWorkHours(40)
+                //.SetPayHour(20)
                 .Build();
 
             contextSingleton.Update(contextModelTest);

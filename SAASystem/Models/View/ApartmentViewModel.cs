@@ -8,18 +8,15 @@ namespace SAASystem.Models.View
 {
     public class ApartmentViewModel
     {
-        public IndexViewModel Index { get; set; }
-        public ListViewModel List { get; set; }
-        public InsertViewModel Insert { get; set; }
-        public DeleteViewModel Delete { get; set; }
-        public EditViewModel Edit { get; set; }
-        public ShowViewModel Show { get; set; }
         public class IndexViewModel
         {
             public IEnumerable<ItemComponentModel> ItemComponentModelEnumerable { get; set; }
         }
         public class ShowViewModel
         {
+            public IEnumerable<SelectListItem> PropertyEnumerable { get; set; }
+            public IEnumerable<SelectListItem> SuiteEnumerable { get; set; }
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -35,6 +32,9 @@ namespace SAASystem.Models.View
                 [Display(Name = "Code")]
                 public string Code { get; set; }
 
+                [Display(Name = "Status")]
+                public string Status { get; set; }
+
                 public static FormViewModel FromContextModel(
                     ApartmentContextModel contextModel)
                 {
@@ -43,6 +43,7 @@ namespace SAASystem.Models.View
                     formViewModel.PropertyId = contextModel.PropertyId;
                     formViewModel.SuiteId = contextModel.SuiteId;
                     formViewModel.Code = contextModel.Code;
+                    formViewModel.Status = contextModel.Status;
                     return formViewModel;
                 }
             }
@@ -60,6 +61,7 @@ namespace SAASystem.Models.View
         {
             public IEnumerable<SelectListItem> PropertyEnumerable { get; set; }
             public IEnumerable<SelectListItem> SuiteEnumerable { get; set; }
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -80,6 +82,10 @@ namespace SAASystem.Models.View
                 [Display(Name = "Code")]
                 public string Code { get; set; }
 
+                [Required]
+                [Display(Name = "Status")]
+                public string Status { get; set; }
+
                 public static FormViewModel FromContextModel(
                     ApartmentContextModel contextModel)
                 {
@@ -88,6 +94,7 @@ namespace SAASystem.Models.View
                     formViewModel.PropertyId = contextModel.PropertyId;
                     formViewModel.SuiteId = contextModel.SuiteId;
                     formViewModel.Code = contextModel.Code;
+                    formViewModel.Status = contextModel.Status;
                     return formViewModel;
                 }
             }
@@ -96,6 +103,7 @@ namespace SAASystem.Models.View
         {
             public IEnumerable<SelectListItem> PropertyEnumerable { get; set; }
             public IEnumerable<SelectListItem> SuiteEnumerable { get; set; }
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -111,6 +119,10 @@ namespace SAASystem.Models.View
                 [StringLength(10)]
                 [Display(Name = "Code")]
                 public string Code { get; set; }
+
+                [Required]
+                [Display(Name = "Status")]
+                public string Status { get; set; }
             }
         }
     }

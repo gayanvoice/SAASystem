@@ -10,5 +10,6 @@
         public int PropertyId { get; set; }
         public int SuiteId { get; set; }
         public string Code { get; set; }
+        public string Status { get; set; }
     }
 }

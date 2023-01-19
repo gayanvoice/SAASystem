@@ -40,8 +40,6 @@ namespace SAASystem.Models.View
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.RoleId = contextModel.RoleId;
                     formViewModel.Name = contextModel.Name;
-                    formViewModel.WorkHours = contextModel.WorkHours;
-                    formViewModel.PayHour = contextModel.PayHour;
                     return formViewModel;
                 }
             }
@@ -83,8 +81,6 @@ namespace SAASystem.Models.View
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.RoleId = contextModel.RoleId;
                     formViewModel.Name = contextModel.Name;
-                    formViewModel.WorkHours = contextModel.WorkHours;
-                    formViewModel.PayHour = contextModel.PayHour;
                     return formViewModel;
                 }
             }

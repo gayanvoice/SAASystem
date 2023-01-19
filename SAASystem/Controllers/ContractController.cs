@@ -48,12 +48,12 @@ namespace SAASystem.Controllers
             else
             {
                 RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
-                TenantContextSingleton tenantContextSingleton = TenantContextSingleton.Instance;
+                UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
                 IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
-                IEnumerable<TenantContextModel> tenantContextModelEnumerable = tenantContextSingleton.SelectAll();
+                IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
                 ContractViewModel.EditViewModel editViewModel = new ContractViewModel.EditViewModel();
                 editViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
-                editViewModel.TenantEnumerable = ContractHelper.FromTenantModelEnumerable(tenantContextModelEnumerable);
+                editViewModel.UserEnumerable = ContractHelper.FromUserModelEnumerable(userContextModelEnumerable);
                 editViewModel.Form = ContractViewModel.EditViewModel.FormViewModel.FromContextModel(contextModel);
                 return View(editViewModel);
             }
@@ -64,11 +64,11 @@ namespace SAASystem.Controllers
             if (!ModelState.IsValid)
             {
                 RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
-                TenantContextSingleton tenantContextSingleton = TenantContextSingleton.Instance;
+                UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
                 IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
-                IEnumerable<TenantContextModel> tenantContextModelEnumerable = tenantContextSingleton.SelectAll();
+                IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
                 editViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
-                editViewModel.TenantEnumerable = ContractHelper.FromTenantModelEnumerable(tenantContextModelEnumerable);
+                editViewModel.UserEnumerable = ContractHelper.FromUserModelEnumerable(userContextModelEnumerable);
                 return View(editViewModel);
             }
             ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
@@ -76,7 +76,7 @@ namespace SAASystem.Controllers
             ContractContextModel contextModel = builder
                 .SetContractId(editViewModel.Form.ContractId)
                 .SetRoomId(editViewModel.Form.RoomId)
-                .SetTenantId(editViewModel.Form.TenantId)
+                .SetUserId(editViewModel.Form.UserId)
                 .SetDateTimeContractFrom(editViewModel.Form.DateTimeContractFrom)
                 .SetDateTimeContractTo(editViewModel.Form.DateTimeContractTo)
                 .SetDepositAmount(editViewModel.Form.DepositAmount)
@@ -88,12 +88,12 @@ namespace SAASystem.Controllers
         public IActionResult Insert()
         {
             RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
-            TenantContextSingleton tenantContextSingleton = TenantContextSingleton.Instance;
+            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
             ContractViewModel.InsertViewModel insertViewModel = new ContractViewModel.InsertViewModel();
             IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
-            IEnumerable<TenantContextModel> tenantContextModelEnumerable = tenantContextSingleton.SelectAll();
+            IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
             insertViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
-            insertViewModel.TenantEnumerable = ContractHelper.FromTenantModelEnumerable(tenantContextModelEnumerable);
+            insertViewModel.UserEnumerable = ContractHelper.FromUserModelEnumerable(userContextModelEnumerable);
             insertViewModel.Form = new ContractViewModel.InsertViewModel.FormViewModel();
             return View(insertViewModel);
         }
@@ -103,18 +103,18 @@ namespace SAASystem.Controllers
             if (!ModelState.IsValid)
             {
                 RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
-                TenantContextSingleton tenantContextSingleton = TenantContextSingleton.Instance;
+                UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
                 IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
-                IEnumerable<TenantContextModel> tenantContextModelEnumerable = tenantContextSingleton.SelectAll();
+                IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
                 insertViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
-                insertViewModel.TenantEnumerable = ContractHelper.FromTenantModelEnumerable(tenantContextModelEnumerable);
+                insertViewModel.UserEnumerable = ContractHelper.FromUserModelEnumerable(userContextModelEnumerable);
                 return View(insertViewModel);
             }
             ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
             ContractBuilder builder = new ContractBuilder();
             ContractContextModel contextModel = builder
                 .SetRoomId(insertViewModel.Form.RoomId)
-                .SetTenantId(insertViewModel.Form.TenantId)
+                .SetUserId(insertViewModel.Form.UserId)
                 .SetDateTimeContractFrom(insertViewModel.Form.DateTimeContractFrom)
                 .SetDateTimeContractTo(insertViewModel.Form.DateTimeContractTo)
                 .SetDepositAmount(insertViewModel.Form.DepositAmount)

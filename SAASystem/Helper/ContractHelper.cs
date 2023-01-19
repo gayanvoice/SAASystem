@@ -33,18 +33,18 @@ namespace SAASystem.Helper
             }
             return selectListItemList;
         }
-        public static IEnumerable<SelectListItem> FromTenantModelEnumerable(
-                    IEnumerable<TenantContextModel> enumerable)
+        public static IEnumerable<SelectListItem> FromUserModelEnumerable(
+                    IEnumerable<UserContextModel> enumerable)
         {
             IList<SelectListItem> selectListItemList = new List<SelectListItem>();
             if (enumerable.Count() > 0)
             {
-                foreach (TenantContextModel contextModel in enumerable)
+                foreach (UserContextModel contextModel in enumerable)
                 {
                     selectListItemList.Add(new SelectListItem()
                     {
-                        Text = contextModel.TenantId + " - " + contextModel.UserId,
-                        Value = contextModel.TenantId.ToString()
+                        Text = contextModel.UserId + " - " + contextModel.Username,
+                        Value = contextModel.UserId.ToString()
                     });
                 }
             }

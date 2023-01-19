@@ -30,8 +30,8 @@ namespace SAASystem.Models.View
                 [Display(Name = "Room Id")]
                 public int RoomId { get; set; }
 
-                [Display(Name = "Tenant Id")]
-                public int TenantId { get; set; }
+                [Display(Name = "User Id")]
+                public int UserId { get; set; }
 
                 [Display(Name = "Date Time Contract From")]
                 public DateTime DateTimeContractFrom { get; set; }
@@ -51,7 +51,7 @@ namespace SAASystem.Models.View
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.ContractId = contextModel.ContractId;
                     formViewModel.RoomId = contextModel.RoomId;
-                    formViewModel.TenantId = contextModel.TenantId;
+                    formViewModel.UserId = contextModel.UserId;
                     formViewModel.DateTimeContractFrom = contextModel.DateTimeContractFrom;
                     formViewModel.DateTimeContractTo = contextModel.DateTimeContractTo;
                     formViewModel.DepositAmount = contextModel.DepositAmount;
@@ -72,7 +72,7 @@ namespace SAASystem.Models.View
         public class EditViewModel
         {
             public IEnumerable<SelectListItem> RoomEnumerable { get; set; }
-            public IEnumerable<SelectListItem> TenantEnumerable { get; set; }
+            public IEnumerable<SelectListItem> UserEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -85,8 +85,8 @@ namespace SAASystem.Models.View
                 public int RoomId { get; set; }
 
                 [Required]
-                [Display(Name = "Tenant Id")]
-                public int TenantId { get; set; }
+                [Display(Name = "User Id")]
+                public int UserId { get; set; }
 
                 [Required]
                 [Display(Name = "Date Time Contract From")]
@@ -110,7 +110,7 @@ namespace SAASystem.Models.View
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.ContractId = contextModel.ContractId;
                     formViewModel.RoomId = contextModel.RoomId;
-                    formViewModel.TenantId = contextModel.TenantId;
+                    formViewModel.UserId = contextModel.UserId;
                     formViewModel.DateTimeContractFrom = contextModel.DateTimeContractFrom;
                     formViewModel.DateTimeContractTo = contextModel.DateTimeContractTo;
                     formViewModel.DepositAmount = contextModel.DepositAmount;
@@ -122,7 +122,7 @@ namespace SAASystem.Models.View
         public class InsertViewModel
         {
             public IEnumerable<SelectListItem> RoomEnumerable { get; set; }
-            public IEnumerable<SelectListItem> TenantEnumerable { get; set; }
+            public IEnumerable<SelectListItem> UserEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -131,8 +131,8 @@ namespace SAASystem.Models.View
                 public int RoomId { get; set; }
 
                 [Required]
-                [Display(Name = "Tenant Id")]
-                public int TenantId { get; set; }
+                [Display(Name = "User Id")]
+                public int UserId { get; set; }
 
                 [Required]
                 [Display(Name = "Date Time Contract From")]

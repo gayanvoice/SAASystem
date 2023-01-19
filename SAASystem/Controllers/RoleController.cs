@@ -63,8 +63,6 @@ namespace SAASystem.Controllers
             RoleContextModel contextModel = builder
                 .SetRoleId(editViewModel.Form.RoleId)
                 .SetName(editViewModel.Form.Name)
-                .SetWorkHours(editViewModel.Form.WorkHours)
-                .SetPayHour(editViewModel.Form.PayHour)
                 .Build();
             roleContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
@@ -86,8 +84,6 @@ namespace SAASystem.Controllers
             RoleBuilder builder = new RoleBuilder();
             RoleContextModel contextModel = builder
                 .SetName(insertViewModel.Form.Name)
-                .SetWorkHours(insertViewModel.Form.WorkHours)
-                .SetPayHour(insertViewModel.Form.PayHour)
                 .Build();
             roleContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });

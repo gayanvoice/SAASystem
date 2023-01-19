@@ -12,7 +12,7 @@ namespace SAASystem.Models.Context
     {
         public int ContractId { get; set; }
         public int RoomId { get; set; }
-        public int TenantId { get; set; }
+        public int UserId { get; set; }
         public DateTime DateTimeContractFrom { get; set; }
         public DateTime DateTimeContractTo { get; set; }
         public double DepositAmount { get; set; }

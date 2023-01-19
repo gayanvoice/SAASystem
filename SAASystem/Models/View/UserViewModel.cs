@@ -26,6 +26,10 @@ namespace SAASystem.Models.View
                 [Display(Name = "User Id")]
                 public int UserId { get; set; }
 
+                [Required]
+                [Display(Name = "Role Id")]
+                public int RoleId { get; set; }
+
                 [Display(Name = "Username")]
                 public string Username { get; set; }
 
@@ -53,6 +57,7 @@ namespace SAASystem.Models.View
                 {
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.UserId = contextModel.UserId;
+                    formViewModel.RoleId = contextModel.RoleId;
                     formViewModel.Username = contextModel.Username;
                     formViewModel.Password = contextModel.Password;
                     formViewModel.Email = contextModel.Email;
@@ -81,6 +86,10 @@ namespace SAASystem.Models.View
                 [Required]
                 [Display(Name = "User Id")]
                 public int UserId { get; set; }
+
+                [Required]
+                [Display(Name = "Role Id")]
+                public int RoleId { get; set; }
 
                 [Required]
                 [StringLength(10)]
@@ -121,11 +130,11 @@ namespace SAASystem.Models.View
                 public static FormViewModel FromContextModel(
                     UserContextModel contextModel)
                 {
-                    CipherSingleton cipherSingleton = CipherSingleton.Instance;
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.UserId = contextModel.UserId;
+                    formViewModel.RoleId = contextModel.RoleId;
                     formViewModel.Username = contextModel.Username;
-                    formViewModel.Password = cipherSingleton.Decrypt(contextModel.Password);
+                    formViewModel.Password = contextModel.Password;
                     formViewModel.Email = contextModel.Email;
                     formViewModel.PhoneNo = contextModel.PhoneNo;
                     formViewModel.Surname = contextModel.Surname;
@@ -144,6 +153,10 @@ namespace SAASystem.Models.View
                 [StringLength(10)]
                 [Display(Name = "Username")]
                 public string Username { get; set; }
+
+                [Required]
+                [Display(Name = "Role Id")]
+                public int RoleId { get; set; }
 
                 [Required]
                 [StringLength(20)]

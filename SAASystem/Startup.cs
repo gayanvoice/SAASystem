@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SAASystem.Context;
-using SAASystem.Context.Interface;
 
 namespace SAASystem
 {
@@ -22,16 +20,6 @@ namespace SAASystem
         {
             services.AddControllersWithViews();
             services.AddDataProtection();
-            services.AddScoped<IUserContext, UserContext>();
-            services.AddScoped<IApartmentContext, ApartmentContext>();
-            services.AddScoped<IContractContext, ContractContext>();
-            services.AddScoped<IEmployeeContext, EmployeeContext>();
-            services.AddScoped<IPropertyContext, PropertyContext>();
-            services.AddScoped<IRoleContext, RoleContext>();
-            services.AddScoped<IRoomContext, RoomContext>();
-            services.AddScoped<IStockContext, StockContext>();
-            services.AddScoped<ISuiteContext, SuiteContext>();
-            services.AddScoped<ITenantContext, TenantContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

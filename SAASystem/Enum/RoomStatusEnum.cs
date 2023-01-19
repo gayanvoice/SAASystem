@@ -2,7 +2,7 @@
 {
     public enum RoomStatusEnum
     {
-        ACTIVE,
-        DEACTIVE
+        ENABLE,
+        DISABLE
     }
 }

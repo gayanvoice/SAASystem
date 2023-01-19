@@ -28,9 +28,9 @@ namespace SAASystem.Builder
             _contextModel.RoomId = roomId;
             return this;
         }
-        public ContractBuilder SetTenantId(int tenantId)
+        public ContractBuilder SetUserId(int userId)
         {
-            _contextModel.TenantId = tenantId;
+            _contextModel.UserId = userId;
             return this;
         }
         public ContractBuilder SetDateTimeContractFrom(DateTime dateTimeContractFrom)

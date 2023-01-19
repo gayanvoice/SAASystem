@@ -37,6 +37,11 @@ namespace SAASystem.Builder
             _contextModel.Code = code;
             return this;
         }
+        public ApartmentBuilder SetStatus(string status)
+        {
+            _contextModel.Status = status;
+            return this;
+        }
         public ApartmentContextModel Build()
         {
             ApartmentContextModel model = _contextModel;

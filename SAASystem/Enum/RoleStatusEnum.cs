@@ -1,6 +1,6 @@
 ﻿namespace SAASystem.Enum
 {
-    public enum StockStatusEnum
+    public enum RoleStatusEnum
     {
         ENABLE,
         DISABLE

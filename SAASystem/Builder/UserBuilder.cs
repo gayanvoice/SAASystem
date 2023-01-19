@@ -23,6 +23,11 @@ namespace SAASystem.Builder
             _userContextModel.UserId = userId;
             return this;
         }
+        public UserBuilder SetRoleId(int roleId)
+        {
+            _userContextModel.RoleId = roleId;
+            return this;
+        }
         public UserBuilder SetAddress(string address)
         {
             _userContextModel.Address = address;
@@ -53,10 +58,14 @@ namespace SAASystem.Builder
             _userContextModel.Username = username;
             return this;
         }
+        public UserBuilder SetStatus(string status)
+        {
+            _userContextModel.Status = status;
+            return this;
+        }
         public UserBuilder SetPassword(string password)
         {
-            CipherSingleton cipherSingleton = CipherSingleton.Instance;
-            _userContextModel.Password = cipherSingleton.Encrypt(password);
+            _userContextModel.Password = password;
             return this;
         }
         public UserContextModel Build()
