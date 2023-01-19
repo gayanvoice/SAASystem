@@ -48,7 +48,7 @@ namespace SAASystem.Controllers
             {
                 SuiteViewModel.EditViewModel editViewModel = new SuiteViewModel.EditViewModel();
                 editViewModel.Form = SuiteViewModel.EditViewModel.FormViewModel.FromContextModel(contextModel);
-                return View(editViewModel);
+                return View(SuiteHelper.GenerateView(editViewModel));
             }
         }
         [HttpPost]
@@ -56,7 +56,7 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(editViewModel);
+                return View(SuiteHelper.GenerateView(editViewModel));
             }
             SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
             SuiteBuilder builder = new SuiteBuilder();
@@ -68,6 +68,7 @@ namespace SAASystem.Controllers
                 .SetSecurityDeposite(editViewModel.Form.SecurityDeposit)
                 .SetDaysAvailable(editViewModel.Form.DaysAvailable)
                 .SetMaximumStay(editViewModel.Form.MaximumStay)
+                .SetStatus(editViewModel.Form.Status)
                 .Build();
             suiteContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
@@ -76,14 +77,14 @@ namespace SAASystem.Controllers
         {
             SuiteViewModel.InsertViewModel insertViewModel = new SuiteViewModel.InsertViewModel();
             insertViewModel.Form = new SuiteViewModel.InsertViewModel.FormViewModel();
-            return View(insertViewModel);
+            return View(SuiteHelper.GenerateView(insertViewModel));
         }
         [HttpPost]
         public IActionResult Insert(SuiteViewModel.InsertViewModel insertViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(insertViewModel);
+                return View(SuiteHelper.GenerateView(insertViewModel));
             }
             SuiteContextSingleton suiteContextSingleton = SuiteContextSingleton.Instance;
             SuiteBuilder builder = new SuiteBuilder();
@@ -94,6 +95,7 @@ namespace SAASystem.Controllers
                 .SetSecurityDeposite(insertViewModel.Form.SecurityDeposit)
                 .SetDaysAvailable(insertViewModel.Form.DaysAvailable)
                 .SetMaximumStay(insertViewModel.Form.MaximumStay)
+                .SetStatus(insertViewModel.Form.Status)
                 .Build();
             suiteContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });

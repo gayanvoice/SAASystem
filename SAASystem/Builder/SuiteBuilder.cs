@@ -53,6 +53,11 @@ namespace SAASystem.Builder
             _contextModel.MaximumStay = maximumStay;
             return this;
         }
+        public SuiteBuilder SetStatus(string status)
+        {
+            _contextModel.Status = status;
+            return this;
+        }
         public SuiteContextModel Build()
         {
             SuiteContextModel model = _contextModel;

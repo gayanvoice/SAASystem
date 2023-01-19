@@ -44,6 +44,9 @@ namespace SAASystem.Models.View
                 [Display(Name = "Maximum Stay")]
                 public int MaximumStay { get; set; }
 
+                [Display(Name = "Status")]
+                public string Status { get; set; }
+
                 public static FormViewModel FromContextModel(
                     SuiteContextModel contextModel)
                 {
@@ -55,6 +58,7 @@ namespace SAASystem.Models.View
                     formViewModel.SecurityDeposit = contextModel.SecurityDeposit;
                     formViewModel.DaysAvailable = contextModel.DaysAvailable;
                     formViewModel.MaximumStay = contextModel.MaximumStay;
+                    formViewModel.Status = contextModel.Status;
                     return formViewModel;
                 }
             }
@@ -70,6 +74,7 @@ namespace SAASystem.Models.View
         }
         public class EditViewModel
         {
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -102,6 +107,10 @@ namespace SAASystem.Models.View
                 [Display(Name = "Maximum Stay")]
                 public int MaximumStay { get; set; }
 
+                [Required]
+                [Display(Name = "Status")]
+                public string Status { get; set; }
+
                 public static FormViewModel FromContextModel(
                     SuiteContextModel contextModel)
                 {
@@ -113,12 +122,14 @@ namespace SAASystem.Models.View
                     formViewModel.SecurityDeposit = contextModel.SecurityDeposit;
                     formViewModel.DaysAvailable = contextModel.DaysAvailable;
                     formViewModel.MaximumStay = contextModel.MaximumStay;
+                    formViewModel.Status = contextModel.Status;
                     return formViewModel;
                 }
             }
         }
         public class InsertViewModel
         {
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -146,6 +157,10 @@ namespace SAASystem.Models.View
                 [Required]
                 [Display(Name = "Maximum Stay")]
                 public int MaximumStay { get; set; }
+
+                [Required]
+                [Display(Name = "Status")]
+                public string Status { get; set; }
             }
         }
     }
