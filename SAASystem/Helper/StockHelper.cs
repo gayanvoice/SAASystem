@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SAASystem.Enum;
 using SAASystem.Models.Component;
 using SAASystem.Models.Context;
+using SAASystem.Models.View;
+using SAASystem.Singleton;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +12,23 @@ namespace SAASystem.Helper
 {
     public class StockHelper
     {
-        public static IEnumerable<SelectListItem> GetIEnumerableSelectListItem<TEnum>()
+        public static StockViewModel.EditViewModel GenerateView(StockViewModel.EditViewModel editViewModel)
+        {
+            ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
+            IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
+            editViewModel.ApartmentEnumerable = FromApartmentModelEnumerable(apartmentContextModelEnumerable);
+            editViewModel.StatusEnumerable = FromEnum<StockStatusEnum>();
+            return editViewModel;
+        }
+        public static StockViewModel.InsertViewModel GenerateView(StockViewModel.InsertViewModel insertViewModel)
+        {
+            ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
+            IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
+            insertViewModel.ApartmentEnumerable = FromApartmentModelEnumerable(apartmentContextModelEnumerable);
+            insertViewModel.StatusEnumerable = FromEnum<StockStatusEnum>();
+            return insertViewModel;
+        }
+        public static IEnumerable<SelectListItem> FromEnum<TEnum>()
          where TEnum : struct, IConvertible, IComparable, IFormattable
         {
             IList<SelectListItem> selectListItemList = new List<SelectListItem>();

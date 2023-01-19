@@ -48,13 +48,9 @@ namespace SAASystem.Controllers
             }
             else
             {
-                ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
-                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
                 StockViewModel.EditViewModel editViewModel = new StockViewModel.EditViewModel();
-                editViewModel.ApartmentEnumerable = StockHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-                editViewModel.StatusEnumerable = StockHelper.GetIEnumerableSelectListItem<StockStatusEnum>();
                 editViewModel.Form = StockViewModel.EditViewModel.FormViewModel.FromContextModel(contextModel);
-                return View(editViewModel);
+                return View(StockHelper.GenerateView(editViewModel));
             }
         }
         [HttpPost]
@@ -62,11 +58,7 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
-                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
-                editViewModel.ApartmentEnumerable = StockHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-                editViewModel.StatusEnumerable = StockHelper.GetIEnumerableSelectListItem<StockStatusEnum>();
-                return View(editViewModel);
+                return View(StockHelper.GenerateView(editViewModel));
             }
             StockContextSingleton stockContextSingleton = StockContextSingleton.Instance;
             StockBuilder builder = new StockBuilder();
@@ -81,24 +73,16 @@ namespace SAASystem.Controllers
         }
         public IActionResult Insert()
         {
-            ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             StockViewModel.InsertViewModel insertViewModel = new StockViewModel.InsertViewModel();
-            IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
-            insertViewModel.ApartmentEnumerable = StockHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-            insertViewModel.StatusEnumerable = StockHelper.GetIEnumerableSelectListItem<StockStatusEnum>();
             insertViewModel.Form = new StockViewModel.InsertViewModel.FormViewModel();
-            return View(insertViewModel);
+            return View(StockHelper.GenerateView(insertViewModel));
         }
         [HttpPost]
         public IActionResult Insert(StockViewModel.InsertViewModel insertViewModel)
         {
             if (!ModelState.IsValid)
             {
-                ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
-                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
-                insertViewModel.ApartmentEnumerable = StockHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-                insertViewModel.StatusEnumerable = StockHelper.GetIEnumerableSelectListItem<StockStatusEnum>();
-                return View(insertViewModel);
+                return View(StockHelper.GenerateView(insertViewModel));
             }
             StockContextSingleton stockContextSingleton = StockContextSingleton.Instance;
             StockBuilder builder = new StockBuilder();

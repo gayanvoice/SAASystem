@@ -48,13 +48,9 @@ namespace SAASystem.Controllers
             }
             else
             {
-                ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
-                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
                 RoomViewModel.EditViewModel editViewModel = new RoomViewModel.EditViewModel();
-                editViewModel.ApartmentEnumerable = RoomHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-                editViewModel.StatusEnumerable = RoomHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
                 editViewModel.Form = RoomViewModel.EditViewModel.FormViewModel.FromContextModel(contextModel);
-                return View(editViewModel);
+                return View(RoomHelper.GenerateView(editViewModel));
             }
         }
         [HttpPost]
@@ -62,11 +58,7 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
-                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
-                editViewModel.ApartmentEnumerable = RoomHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-                editViewModel.StatusEnumerable = RoomHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
-                return View(editViewModel);
+                return View(RoomHelper.GenerateView(editViewModel));
             }
             RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
             RoomBuilder builder = new RoomBuilder();
@@ -80,24 +72,16 @@ namespace SAASystem.Controllers
         }
         public IActionResult Insert()
         {
-            ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             RoomViewModel.InsertViewModel insertViewModel = new RoomViewModel.InsertViewModel();
-            IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
-            insertViewModel.ApartmentEnumerable = RoomHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-            insertViewModel.StatusEnumerable = RoomHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
             insertViewModel.Form = new RoomViewModel.InsertViewModel.FormViewModel();
-            return View(insertViewModel);
+            return View(RoomHelper.GenerateView(insertViewModel));
         }
         [HttpPost]
         public IActionResult Insert(RoomViewModel.InsertViewModel insertViewModel)
         {
             if (!ModelState.IsValid)
             {
-                ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
-                IEnumerable<ApartmentContextModel> apartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
-                insertViewModel.ApartmentEnumerable = RoomHelper.FromApartmentModelEnumerable(apartmentContextModelEnumerable);
-                insertViewModel.StatusEnumerable = RoomHelper.GetIEnumerableSelectListItem<RoomStatusEnum>();
-                return View(insertViewModel);
+                return View(RoomHelper.GenerateView(insertViewModel));
             }
             RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
             RoomBuilder builder = new RoomBuilder();
