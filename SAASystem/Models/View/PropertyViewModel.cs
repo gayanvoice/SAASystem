@@ -1,4 +1,5 @@
-﻿using SAASystem.Models.Component;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SAASystem.Models.Component;
 using SAASystem.Models.Context;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -40,6 +41,9 @@ namespace SAASystem.Models.View
                 [Display(Name = "PostCode")]
                 public string PostCode { get; set; }
 
+                [Display(Name = "Status")]
+                public string Status { get; set; }
+
                 public static FormViewModel FromContextModel(
                     PropertyContextModel contextModel)
                 {
@@ -50,6 +54,7 @@ namespace SAASystem.Models.View
                     formViewModel.Street = contextModel.Street;
                     formViewModel.City = contextModel.City;
                     formViewModel.PostCode = contextModel.PostalCode;
+                    formViewModel.Status = contextModel.Status;
                     return formViewModel;
                 }
             }
@@ -65,6 +70,7 @@ namespace SAASystem.Models.View
         }
         public class EditViewModel
         {
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -97,6 +103,10 @@ namespace SAASystem.Models.View
                 [Display(Name = "PostCode")]
                 public string PostCode { get; set; }
 
+                [Required]
+                [Display(Name = "Status")]
+                public string Status { get; set; }
+
                 public static FormViewModel FromContextModel(
                     PropertyContextModel contextModel)
                 {
@@ -107,12 +117,14 @@ namespace SAASystem.Models.View
                     formViewModel.Street = contextModel.Street;
                     formViewModel.City = contextModel.City;
                     formViewModel.PostCode = contextModel.PostalCode;
+                    formViewModel.Status = contextModel.Status;
                     return formViewModel;
                 }
             }
         }
         public class InsertViewModel
         {
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -140,6 +152,10 @@ namespace SAASystem.Models.View
                 [StringLength(45)]
                 [Display(Name = "PostCode")]
                 public string PostCode { get; set; }
+
+                [Required]
+                [Display(Name = "Status")]
+                public string Status { get; set; }
             }
         }
     }

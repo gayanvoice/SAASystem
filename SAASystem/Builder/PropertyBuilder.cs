@@ -48,6 +48,13 @@ namespace SAASystem.Builder
             _contextModel.PostalCode = postalCode;
             return this;
         }
+
+        public PropertyBuilder SetStatus(string status)
+        {
+            _contextModel.Status = status;
+            return this;
+        }
+
         public PropertyContextModel Build()
         {
             PropertyContextModel model = _contextModel;

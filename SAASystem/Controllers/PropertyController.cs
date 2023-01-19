@@ -48,7 +48,7 @@ namespace SAASystem.Controllers
             {
                 PropertyViewModel.EditViewModel editViewModel = new PropertyViewModel.EditViewModel();
                 editViewModel.Form = PropertyViewModel.EditViewModel.FormViewModel.FromContextModel(contextModel);
-                return View(editViewModel);
+                return View(PropertyHelper.GenerateView(editViewModel));
             }
         }
         [HttpPost]
@@ -56,7 +56,7 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(editViewModel);
+                return View(PropertyHelper.GenerateView(editViewModel));
             }
             PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
             PropertyBuilder builder = new PropertyBuilder();
@@ -67,6 +67,7 @@ namespace SAASystem.Controllers
                 .SetName(editViewModel.Form.Name)
                 .SetPostalCode(editViewModel.Form.PostCode)
                 .SetStreet(editViewModel.Form.Street)
+                .SetStatus(editViewModel.Form.Status)
                 .Build();
             propertyContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
@@ -75,14 +76,14 @@ namespace SAASystem.Controllers
         {
             PropertyViewModel.InsertViewModel insertViewModel = new PropertyViewModel.InsertViewModel();
             insertViewModel.Form = new PropertyViewModel.InsertViewModel.FormViewModel();
-            return View(insertViewModel);
+            return View(PropertyHelper.GenerateView(insertViewModel));
         }
         [HttpPost]
         public IActionResult Insert(PropertyViewModel.InsertViewModel insertViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(insertViewModel);
+                return View(PropertyHelper.GenerateView(insertViewModel));
             }
             PropertyContextSingleton propertyContextSingleton = PropertyContextSingleton.Instance;
             PropertyBuilder builder = new PropertyBuilder();
@@ -92,6 +93,7 @@ namespace SAASystem.Controllers
                 .SetName(insertViewModel.Form.Name)
                 .SetPostalCode(insertViewModel.Form.PostCode)
                 .SetStreet(insertViewModel.Form.Street)
+                .SetStatus(insertViewModel.Form.Status)
                 .Build();
             propertyContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });
