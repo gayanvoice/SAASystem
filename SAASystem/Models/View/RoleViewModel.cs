@@ -1,4 +1,5 @@
-﻿using SAASystem.Models.Component;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SAASystem.Models.Component;
 using SAASystem.Models.Context;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -28,11 +29,8 @@ namespace SAASystem.Models.View
                 [Display(Name = "Name")]
                 public string Name { get; set; }
 
-                [Display(Name = "WorkHours")]
-                public double WorkHours { get; set; }
-
-                [Display(Name = "PayHour")]
-                public double PayHour { get; set; }
+                [Display(Name = "Status")]
+                public string Status { get; set; }
 
                 public static FormViewModel FromContextModel(
                     RoleContextModel contextModel)
@@ -40,6 +38,7 @@ namespace SAASystem.Models.View
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.RoleId = contextModel.RoleId;
                     formViewModel.Name = contextModel.Name;
+                    formViewModel.Status = contextModel.Status;
                     return formViewModel;
                 }
             }
@@ -55,6 +54,7 @@ namespace SAASystem.Models.View
         }
         public class EditViewModel
         {
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -68,12 +68,8 @@ namespace SAASystem.Models.View
                 public string Name { get; set; }
 
                 [Required]
-                [Display(Name = "WorkHours")]
-                public double WorkHours { get; set; }
-
-                [Required]
-                [Display(Name = "PayHour")]
-                public double PayHour { get; set; }
+                [Display(Name = "Status")]
+                public string Status { get; set; }
 
                 public static FormViewModel FromContextModel(
                     RoleContextModel contextModel)
@@ -81,12 +77,14 @@ namespace SAASystem.Models.View
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.RoleId = contextModel.RoleId;
                     formViewModel.Name = contextModel.Name;
+                    formViewModel.Status = contextModel.Status;
                     return formViewModel;
                 }
             }
         }
         public class InsertViewModel
         {
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -96,12 +94,8 @@ namespace SAASystem.Models.View
                 public string Name { get; set; }
 
                 [Required]
-                [Display(Name = "WorkHours")]
-                public double WorkHours { get; set; }
-
-                [Required]
-                [Display(Name = "PayHour")]
-                public double PayHour { get; set; }
+                [Display(Name = "Status")]
+                public string Status { get; set; }
             }
         }
     }

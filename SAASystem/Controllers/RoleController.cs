@@ -48,7 +48,7 @@ namespace SAASystem.Controllers
             {
                 RoleViewModel.EditViewModel editViewModel = new RoleViewModel.EditViewModel();
                 editViewModel.Form = RoleViewModel.EditViewModel.FormViewModel.FromContextModel(contextModel);
-                return View(editViewModel);
+                return View(RoleHelper.GenerateView(editViewModel));
             }
         }
         [HttpPost]
@@ -56,7 +56,7 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(editViewModel);
+                return View(RoleHelper.GenerateView(editViewModel));
             }
             RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
             RoleBuilder builder = new RoleBuilder();
@@ -71,14 +71,14 @@ namespace SAASystem.Controllers
         {
             RoleViewModel.InsertViewModel insertViewModel = new RoleViewModel.InsertViewModel();
             insertViewModel.Form = new RoleViewModel.InsertViewModel.FormViewModel();
-            return View(insertViewModel);
+            return View(RoleHelper.GenerateView(insertViewModel));
         }
         [HttpPost]
         public IActionResult Insert(RoleViewModel.InsertViewModel insertViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(insertViewModel);
+                return View(RoleHelper.GenerateView(insertViewModel));
             }
             RoleContextSingleton roleContextSingleton = RoleContextSingleton.Instance;
             RoleBuilder builder = new RoleBuilder();

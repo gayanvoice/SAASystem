@@ -1,9 +1,9 @@
 ﻿@using System.Reflection;
 @using SAASystem.Models.Context;
+@using SAASystem.Enum;
 @model SAASystem.Models.View.RoleViewModel.ListViewModel
 @{
     ViewData["Title"] = "List";
-    string controller = "Role";
 }
 @section CSS
 {
@@ -15,21 +15,21 @@
         if (Model.Status.Equals("ErrorNoId"))
         {
             <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                <strong>Error</strong> Requested @controller Id does not exist!
+                <strong>Error</strong> Requested Role Id does not exist!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
         if (Model.Status.Equals("SuccessEdit"))
         {
             <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                <strong>Success</strong> @controller is updated successfully!
+                <strong>Success</strong> Role is updated successfully!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
         if (Model.Status.Equals("SuccessInsert"))
         {
             <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                <strong>Success</strong>  @controller is inserted successfully!
+                <strong>Success</strong>  Role is inserted successfully!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
@@ -37,7 +37,7 @@
         if (Model.Status.Equals("SuccessDelete"))
         {
             <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
-                <strong>Success</strong> @controller is deleted successfully!
+                <strong>Success</strong> Role is deleted successfully!
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
@@ -45,13 +45,13 @@
         if (Model.Status.Equals("ErrorConstraint"))
         {
             <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
-                <strong>Error</strong> Can not delete @controller due to foriegn key constraint
+                <strong>Error</strong> Can not delete Role due to foriegn key constraint
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
 
         }
     }
-    <h2 class="pb-2 border-bottom"><a asp-controller="@controller" asp-action="Index" class="text-decoration-none">Index</a> / List</h2>
+    <h2 class="pb-2 border-bottom"><a asp-controller="Role" asp-action="Index" class="text-decoration-none">Index</a> / List</h2>
 
     <div class="g-4 py-5">
         @if (Model.RoleContextModelEnumerable.Count() > 0)
@@ -74,25 +74,26 @@
                         @{
                             foreach (RoleContextModel contextModel in Model.RoleContextModelEnumerable)
                             {
-                                int id = contextModel.RoleId;
-                                <tr>
+                                string rowColor = "table-primary";
+                                if (contextModel.Status.Equals(RoleStatusEnum.DISABLE.ToString())) rowColor = "table-danger";
+                                <tr class="@rowColor">
                                     @foreach (PropertyInfo propertyInfo in contextModel.GetType().GetProperties().Take(4))
                                     {
                                         <td>@propertyInfo.GetValue(contextModel, null)</td>
                                     }
                                     <td>
 
-                                        <a asp-controller="@controller"
+                                        <a asp-controller="Role"
                                            asp-action="Show"
-                                           asp-route-Id="@id"
+                                           asp-route-Id="@contextModel.RoleId"
                                            class="text-decoration-none p-1">Show</a>
-                                        <a asp-controller="@controller"
+                                        <a asp-controller="Role"
                                            asp-action="Edit"
-                                           asp-route-Id="@id"
+                                           asp-route-Id="@contextModel.RoleId"
                                            class="text-decoration-none p-1">Edit</a>
-                                        <a asp-controller="@controller"
+                                        <a asp-controller="Role"
                                            asp-action="Delete"
-                                           asp-route-Id="@id"
+                                           asp-route-Id="@contextModel.RoleId"
                                            class="text-decoration-none p-1">Delete</a>
                                     </td>
                                 </tr>
