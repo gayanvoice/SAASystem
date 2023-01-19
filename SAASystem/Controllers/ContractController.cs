@@ -4,7 +4,6 @@ using SAASystem.Helper;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
 using SAASystem.Singleton;
-using System.Collections.Generic;
 
 namespace SAASystem.Controllers
 {
@@ -47,15 +46,9 @@ namespace SAASystem.Controllers
             }
             else
             {
-                RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
-                UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
-                IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
-                IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
                 ContractViewModel.EditViewModel editViewModel = new ContractViewModel.EditViewModel();
-                editViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
-                editViewModel.UserEnumerable = ContractHelper.FromUserModelEnumerable(userContextModelEnumerable);
                 editViewModel.Form = ContractViewModel.EditViewModel.FormViewModel.FromContextModel(contextModel);
-                return View(editViewModel);
+                return View(ContractHelper.GenerateView(editViewModel));
             }
         }
         [HttpPost]
@@ -63,13 +56,7 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
-                UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
-                IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
-                IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
-                editViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
-                editViewModel.UserEnumerable = ContractHelper.FromUserModelEnumerable(userContextModelEnumerable);
-                return View(editViewModel);
+                return View(ContractHelper.GenerateView(editViewModel));
             }
             ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
             ContractBuilder builder = new ContractBuilder();
@@ -87,28 +74,16 @@ namespace SAASystem.Controllers
         }
         public IActionResult Insert()
         {
-            RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
-            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
             ContractViewModel.InsertViewModel insertViewModel = new ContractViewModel.InsertViewModel();
-            IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
-            IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
-            insertViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
-            insertViewModel.UserEnumerable = ContractHelper.FromUserModelEnumerable(userContextModelEnumerable);
             insertViewModel.Form = new ContractViewModel.InsertViewModel.FormViewModel();
-            return View(insertViewModel);
+            return View(ContractHelper.GenerateView(insertViewModel));
         }
         [HttpPost]
         public IActionResult Insert(ContractViewModel.InsertViewModel insertViewModel)
         {
             if (!ModelState.IsValid)
             {
-                RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
-                UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
-                IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
-                IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
-                insertViewModel.RoomEnumerable = ContractHelper.FromRoomModelEnumerable(roomContextModelEnumerable);
-                insertViewModel.UserEnumerable = ContractHelper.FromUserModelEnumerable(userContextModelEnumerable);
-                return View(insertViewModel);
+                return View(ContractHelper.GenerateView(insertViewModel));
             }
             ContractContextSingleton contractContextSingleton = ContractContextSingleton.Instance;
             ContractBuilder builder = new ContractBuilder();

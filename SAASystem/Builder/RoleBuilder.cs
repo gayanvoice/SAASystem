@@ -28,6 +28,11 @@ namespace SAASystem.Builder
             _contextModel.Name = name;
             return this;
         }
+        public RoleBuilder SetStatus(string status)
+        {
+            _contextModel.Status = status;
+            return this;
+        }
         public RoleContextModel Build()
         {
             RoleContextModel model = _contextModel;

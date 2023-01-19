@@ -22,12 +22,6 @@ namespace SAASystem.Helper
             });
             itemModelList.Add(new ItemComponentModel()
             {
-                Name = "Employee",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Employee", Action = "Index" },
-                ImageUrl = "/pics/employee.jpg"
-            });
-            itemModelList.Add(new ItemComponentModel()
-            {
                 Name = "Property",
                 Route = new ItemComponentModel.RouteModel() { Controller = "Property", Action = "Index" },
                 ImageUrl = "/pics/property.jpg"
@@ -55,12 +49,6 @@ namespace SAASystem.Helper
                 Name = "Suite",
                 Route = new ItemComponentModel.RouteModel() { Controller = "Suite", Action = "Index" },
                 ImageUrl = "/pics/suite.jpg"
-            });
-            itemModelList.Add(new ItemComponentModel()
-            {
-                Name = "Tenant",
-                Route = new ItemComponentModel.RouteModel() { Controller = "Tenant", Action = "Index" },
-                ImageUrl = "/pics/tenant.jpg"
             });
             itemModelList.Add(new ItemComponentModel()
             {

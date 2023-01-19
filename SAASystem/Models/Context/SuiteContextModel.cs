@@ -16,5 +16,6 @@ namespace SAASystem.Models.Context
         public double SecurityDeposit { get; set; }
         public int DaysAvailable { get; set; }
         public int MaximumStay { get; set; }
+        public string Status { get; set; }
     }
 }

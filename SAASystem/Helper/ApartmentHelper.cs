@@ -34,6 +34,17 @@ namespace SAASystem.Helper
             insertViewModel.StatusEnumerable = FromEnum<ApartmentStatusEnum>();
             return insertViewModel;
         }
+        private static IEnumerable<SelectListItem> FromEnum<TEnum>()
+             where TEnum : struct, IConvertible, IComparable, IFormattable
+        {
+            IList<SelectListItem> selectListItemList = new List<SelectListItem>();
+            foreach (TEnum tEnum in System.Enum.GetValues(typeof(TEnum)).Cast<TEnum>())
+            {
+                string value = tEnum.ToString();
+                selectListItemList.Add(new SelectListItem() { Text = value, Value = value });
+            }
+            return selectListItemList;
+        }
         private static IEnumerable<SelectListItem> FromPropertyEnumerable(
             IEnumerable<PropertyContextModel> enumerable)
         {
@@ -81,17 +92,6 @@ namespace SAASystem.Helper
                     Text = "No Items in Suite Table",
                     Value = null
                 });
-            }
-            return selectListItemList;
-        }
-        private static IEnumerable<SelectListItem> FromEnum<TEnum>()
-        where TEnum : struct, IConvertible, IComparable, IFormattable
-        {
-            IList<SelectListItem> selectListItemList = new List<SelectListItem>();
-            foreach (TEnum tEnum in System.Enum.GetValues(typeof(TEnum)).Cast<TEnum>())
-            {
-                string value = tEnum.ToString();
-                selectListItemList.Add(new SelectListItem() { Text = value, Value = value });
             }
             return selectListItemList;
         }

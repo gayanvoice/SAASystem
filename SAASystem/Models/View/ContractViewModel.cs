@@ -34,16 +34,16 @@ namespace SAASystem.Models.View
                 public int UserId { get; set; }
 
                 [Display(Name = "Date Time Contract From")]
-                public DateTime DateTimeContractFrom { get; set; }
+                public string DateTimeContractFrom { get; set; }
 
                 [Display(Name = "Date Time Contract To")]
-                public DateTime DateTimeContractTo { get; set; }
+                public string DateTimeContractTo { get; set; }
 
                 [Display(Name = "Deposit Amount")]
-                public double DepositAmount { get; set; }
+                public string DepositAmount { get; set; }
 
                 [Display(Name = "Payed Amount")]
-                public double PayedAmount { get; set; }
+                public string PayedAmount { get; set; }
 
                 public static FormViewModel FromContextModel(
                   ContractContextModel contextModel)
@@ -52,10 +52,10 @@ namespace SAASystem.Models.View
                     formViewModel.ContractId = contextModel.ContractId;
                     formViewModel.RoomId = contextModel.RoomId;
                     formViewModel.UserId = contextModel.UserId;
-                    formViewModel.DateTimeContractFrom = contextModel.DateTimeContractFrom;
-                    formViewModel.DateTimeContractTo = contextModel.DateTimeContractTo;
-                    formViewModel.DepositAmount = contextModel.DepositAmount;
-                    formViewModel.PayedAmount = contextModel.PayedAmount;
+                    formViewModel.DateTimeContractFrom = contextModel.DateTimeContractFrom.ToShortDateString();
+                    formViewModel.DateTimeContractTo = contextModel.DateTimeContractTo.ToShortDateString();
+                    formViewModel.DepositAmount = $"£ {contextModel.DepositAmount}";
+                    formViewModel.PayedAmount = $"£ {contextModel.PayedAmount}";
                     return formViewModel;
                 }
             }

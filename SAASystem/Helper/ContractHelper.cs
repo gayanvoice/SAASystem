@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using SAASystem.Models.Component;
 using SAASystem.Models.Context;
+using SAASystem.Models.View;
+using SAASystem.Singleton;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +10,27 @@ namespace SAASystem.Helper
 {
     public class ContractHelper
     {
-        public static IEnumerable<SelectListItem> FromRoomModelEnumerable(
+        public static ContractViewModel.EditViewModel GenerateView(ContractViewModel.EditViewModel editViewModel)
+        {
+            RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
+            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
+            IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
+            IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
+            editViewModel.RoomEnumerable = FromRoomEnumerable(roomContextModelEnumerable);
+            editViewModel.UserEnumerable = FromUserEnumerable(userContextModelEnumerable);
+            return editViewModel;
+        }
+        public static ContractViewModel.InsertViewModel GenerateView(ContractViewModel.InsertViewModel insertViewModel)
+        {
+            RoomContextSingleton roomContextSingleton = RoomContextSingleton.Instance;
+            UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
+            IEnumerable<RoomContextModel> roomContextModelEnumerable = roomContextSingleton.SelectAll();
+            IEnumerable<UserContextModel> userContextModelEnumerable = userContextSingleton.SelectAll();
+            insertViewModel.RoomEnumerable = FromRoomEnumerable(roomContextModelEnumerable);
+            insertViewModel.UserEnumerable = FromUserEnumerable(userContextModelEnumerable);
+            return insertViewModel;
+        }
+        private static IEnumerable<SelectListItem> FromRoomEnumerable(
             IEnumerable<RoomContextModel> enumerable)
         {
             IList<SelectListItem> selectListItemList = new List<SelectListItem>();
@@ -33,7 +55,7 @@ namespace SAASystem.Helper
             }
             return selectListItemList;
         }
-        public static IEnumerable<SelectListItem> FromUserModelEnumerable(
+        private static IEnumerable<SelectListItem> FromUserEnumerable(
                     IEnumerable<UserContextModel> enumerable)
         {
             IList<SelectListItem> selectListItemList = new List<SelectListItem>();
