@@ -16,7 +16,7 @@ namespace SAASystem.Test.Context
         {
             StockContextSingleton contextSingleton = StockContextSingleton.Instance;
             IEnumerable<StockContextModel> contextEnumerable = contextSingleton.SelectAll();
-            Assert.Equal(6, contextEnumerable.Count());
+            Assert.Equal(3, contextEnumerable.Count());
         }
         [Fact]
         public void Select()

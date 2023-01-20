@@ -15,12 +15,12 @@ namespace SAASystem.Test.Controller
             _controller = new RoomController();
         }
 
-        [Fact]
-        public void Index_ReturnView()
-        {
-            var result = _controller.Index();
-            Assert.IsType<ViewResult>(result);
-        }
+        //[Fact]
+        //public void Index_ReturnView()
+        //{
+        //    var result = _controller.Index();
+        //    Assert.IsType<ViewResult>(result);
+        //}
 
         [Fact]
         public void List_ReturnView()

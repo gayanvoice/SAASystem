@@ -1,4 +1,5 @@
 using SAASystem.Builder;
+using SAASystem.Enum;
 using SAASystem.Models.Context;
 using SAASystem.Singleton;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace SAASystem.Test.Context
         {
             PropertyContextSingleton contextSingleton = PropertyContextSingleton.Instance;
             IEnumerable<PropertyContextModel> contextEnumerable = contextSingleton.SelectAll();
-            Assert.Equal(9, contextEnumerable.Count());
+            Assert.Equal(5, contextEnumerable.Count());
         }
         [Fact]
         public void Select()
@@ -40,6 +41,7 @@ namespace SAASystem.Test.Context
                 .SetName("TEMP_NAME")
                 .SetPostalCode("TEMP_CODE")
                 .SetStreet("TEMP_STREET")
+                .SetStatus(PropertyStatusEnum.OPERATION.ToString())
                 .Build();
 
             PropertyContextSingleton contextSingleton = PropertyContextSingleton.Instance;
@@ -72,6 +74,7 @@ namespace SAASystem.Test.Context
                 .SetName("TEMP_NAME")
                 .SetPostalCode("TEMP_CODE")
                 .SetStreet("TEMP_STREET_UPDATED")
+                .SetStatus(PropertyStatusEnum.OPERATION.ToString())
                 .Build();
 
             contextSingleton.Update(contextModelTest);

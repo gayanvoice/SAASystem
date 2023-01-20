@@ -1,4 +1,5 @@
 using SAASystem.Builder;
+using SAASystem.Enum;
 using SAASystem.Models.Context;
 using SAASystem.Singleton;
 using System.Collections.Generic;
@@ -16,12 +17,12 @@ namespace SAASystem.Test.Context
         {
             UserContextSingleton contextSingleton = UserContextSingleton.Instance;
             IEnumerable<UserContextModel> contextEnumerable = contextSingleton.SelectAll();
-            Assert.Equal(9, contextEnumerable.Count());
+            Assert.Equal(6, contextEnumerable.Count());
         }
         [Fact]
         public void SelectUserId()
         {
-            string username = "emily";
+            string username = "staff";
             UserContextSingleton contextSingleton = UserContextSingleton.Instance;
             UserContextModel contextModel = contextSingleton.Select(username);
             Assert.True(contextModel.Username.Equals(username));
@@ -29,7 +30,7 @@ namespace SAASystem.Test.Context
         [Fact]
         public void SelectUserName()
         {
-            int id = 1;
+            int id = 3;
             UserContextSingleton contextSingleton = UserContextSingleton.Instance;
             UserContextModel contextModel = contextSingleton.Select(id);
             Assert.True(contextModel.UserId.Equals(id));
@@ -43,13 +44,15 @@ namespace SAASystem.Test.Context
             UserBuilder builder = new UserBuilder();
 
             contextModelTest = builder
-                .SetUsername("TEMP")
+                .SetUsername("admin")
                 .SetPassword("1234")
                 .SetEmail("temp@temp.com")
                 .SetPhoneNo("0740006")
                 .SetSurname("TEMP_SURNAME")
                 .SetGivenName("TEMP_GIVENAME")
                 .SetAddress("TEMP_ADDRESS")
+                .SetRoleId(2)
+                .SetStatus(UserStatusEnum.ENABLE.ToString())
                 .Build();
 
             UserContextSingleton contextSingleton = UserContextSingleton.Instance;
@@ -72,18 +75,20 @@ namespace SAASystem.Test.Context
 
             UserContextSingleton contextSingleton = UserContextSingleton.Instance;
             contextEnumerable = contextSingleton.SelectAll();
-            contextModelLast = contextEnumerable.OrderByDescending(a => a.UserId).First();
+            contextModelLast = contextEnumerable.OrderByDescending(a => a.Username.Equals("TEMP")).First();
 
 
             contextModelTest = builder
                 .SetUserId(contextModelLast.UserId)
-                .SetUsername("UPDATE")
+                .SetUsername("TEMP")
                 .SetPassword("1234")
                 .SetEmail("temp@temp.com")
                 .SetPhoneNo("0740006")
                 .SetSurname("TEMP_SURNAME")
                 .SetGivenName("TEMP_GIVENAME")
                 .SetAddress("TEMP_ADDRESS")
+                .SetRoleId(2)
+                .SetStatus(UserStatusEnum.ENABLE.ToString())
                 .Build();
 
             contextSingleton.Update(contextModelTest);

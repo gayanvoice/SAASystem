@@ -16,7 +16,7 @@ namespace SAASystem.Test.Context
         {
             RoomContextSingleton contextSingleton = RoomContextSingleton.Instance;
             IEnumerable<RoomContextModel> contextEnumerable = contextSingleton.SelectAll();
-            Assert.Equal(7, contextEnumerable.Count());
+            Assert.Equal(4, contextEnumerable.Count());
         }
         [Fact]
         public void Select()

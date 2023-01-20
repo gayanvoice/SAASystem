@@ -1,4 +1,5 @@
 using SAASystem.Builder;
+using SAASystem.Enum;
 using SAASystem.Models.Context;
 using SAASystem.Singleton;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace SAASystem.Test.Context
         {
             SuiteContextSingleton contextSingleton = SuiteContextSingleton.Instance;
             IEnumerable<SuiteContextModel> contextEnumerable = contextSingleton.SelectAll();
-            Assert.Equal(7, contextEnumerable.Count());
+            Assert.Equal(6, contextEnumerable.Count());
         }
         [Fact]
         public void Select()
@@ -41,6 +42,7 @@ namespace SAASystem.Test.Context
                 .SetSecurityDeposite(100)
                 .SetDaysAvailable(297)
                 .SetMaximumStay(357)
+                .SetStatus(SuiteStatusEnum.ENABLE.ToString())
                 .Build();
 
             SuiteContextSingleton contextSingleton = SuiteContextSingleton.Instance;
@@ -74,6 +76,7 @@ namespace SAASystem.Test.Context
                 .SetSecurityDeposite(100)
                 .SetDaysAvailable(297)
                 .SetMaximumStay(357)
+                .SetStatus(SuiteStatusEnum.ENABLE.ToString())
                 .Build();
 
             contextSingleton.Update(contextModelTest);

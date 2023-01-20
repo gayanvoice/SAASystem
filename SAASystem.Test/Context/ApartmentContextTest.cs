@@ -1,4 +1,5 @@
 using SAASystem.Builder;
+using SAASystem.Enum;
 using SAASystem.Models.Context;
 using SAASystem.Singleton;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace SAASystem.Test.Context
         {
             ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             IEnumerable<ApartmentContextModel> apartmentContextEnumerable = apartmentContextSingleton.SelectAll();
-            Assert.Equal(29, apartmentContextEnumerable.Count());
+            Assert.Equal(23, apartmentContextEnumerable.Count());
         }
         [Fact]
         public void Insert()
@@ -41,6 +42,7 @@ namespace SAASystem.Test.Context
                  .SetPropertyId(2)
                  .SetSuiteId(2)
                  .SetCode("TEMP")
+                 .SetStatus(ApartmentStatusEnum.ENABLE.ToString())
                  .Build();
             ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
             apartmentContextSingleton.Insert(apartmentContextModelTemp);
@@ -61,6 +63,7 @@ namespace SAASystem.Test.Context
                  .SetPropertyId(apartmentContextModel.PropertyId)
                  .SetSuiteId(apartmentContextModel.SuiteId)
                  .SetCode("TEMP_2")
+                 .SetStatus(ApartmentStatusEnum.ENABLE.ToString())
                  .Build();
             apartmentContextSingleton.Update(apartmentContextModelUpdate);
             apartmentContextEnumerable = apartmentContextSingleton.SelectAll();

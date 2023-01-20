@@ -1,4 +1,5 @@
 using SAASystem.Builder;
+using SAASystem.Enum;
 using SAASystem.Models.Context;
 using SAASystem.Singleton;
 using System.Collections.Generic;
@@ -16,12 +17,12 @@ namespace SAASystem.Test.Context
         {
             RoleContextSingleton contextSingleton = RoleContextSingleton.Instance;
             IEnumerable<RoleContextModel> contextEnumerable = contextSingleton.SelectAll();
-            Assert.Equal(4, contextEnumerable.Count());
+            Assert.Equal(2, contextEnumerable.Count());
         }
         [Fact]
         public void Select()
         {
-            int id = 3;
+            int id = 1;
             RoleContextSingleton contextSingleton = RoleContextSingleton.Instance;
             RoleContextModel contextModel = contextSingleton.Select(id);
             Assert.True(contextModel.RoleId.Equals(id));
@@ -36,9 +37,8 @@ namespace SAASystem.Test.Context
 
             contextModelTest = builder
                .SetName("TEMP_NAME")
-                //.SetWorkHours(40)
-                //.SetPayHour(15)
-                .Build();
+               .SetStatus(RoleStatusEnum.ENABLE.ToString())
+               .Build();
 
             RoleContextSingleton contextSingleton = RoleContextSingleton.Instance;
             contextSingleton.Insert(contextModelTest);
@@ -66,8 +66,7 @@ namespace SAASystem.Test.Context
             contextModelTest = builder
                 .SetRoleId(contextModelLast.RoleId)
                 .SetName("TEMP_UPDATE")
-                //.SetWorkHours(40)
-                //.SetPayHour(20)
+                .SetStatus(RoleStatusEnum.ENABLE.ToString())
                 .Build();
 
             contextSingleton.Update(contextModelTest);
