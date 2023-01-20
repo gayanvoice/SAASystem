@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
+using SAASystem.Enum;
 using SAASystem.Helper;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
@@ -11,9 +12,25 @@ namespace SAASystem.Controllers
     {
         public IActionResult Index()
         {
-            RoleViewModel.IndexViewModel viewModel = new RoleViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = RoleHelper.GetItemComponentModels();
-            return View(viewModel);
+            string username = Request.Cookies[UserCookieEnum.A_SYSTEM_USERNAME.ToString()];
+            string role = Request.Cookies[UserCookieEnum.A_SYSTEM_ROLE.ToString()];
+            if (username is null || role is null)
+            {
+                return RedirectToAction("Index", "Home", new { Param = "NotLoggedIn" });
+            }
+            else
+            {
+                if (role.Equals(UserRoleEnum.STAFF.ToString()))
+                {
+                    RoleViewModel.IndexViewModel viewModel = new RoleViewModel.IndexViewModel();
+                    viewModel.ItemComponentModelEnumerable = RoleHelper.GetItemComponentModels();
+                    return View(viewModel);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home", new { Param = "UnauthorizedAccess" });
+                }
+            }
         }
         public IActionResult List(string param)
         {

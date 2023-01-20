@@ -1,14 +1,14 @@
 ﻿@using System.Reflection;
-@model SAASystem.Models.View.PropertyViewModel.ShowViewModel;
+@model SAASystem.Models.View.HomeViewModel.AccountViewModel;
 @{
-    ViewData["Title"] = "Show";
+    ViewData["Title"] = "Account";
 }
 @section CSS {
 
     <link href="https://getbootstrap.com/docs/5.0/examples/features/features.css" rel="stylesheet">
 }
 <div class="px-4 py-5" id="custom-cards">
-    <h2 class="pb-2 border-bottom">Show</h2>
+    <h2 class="pb-2 border-bottom">Account</h2>
     <div class="g-4 py-5">
         <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
             @{
@@ -27,7 +27,7 @@
         <hr class="my-4">
         <div class="row g-3">
             <div class="col-sm-6">
-                <a asp-controller="Property" asp-action="List" class="w-100 btn btn-secondary btn-sm">Back</a>
+                <a asp-controller="Home" asp-action="Index" class="w-100 btn btn-secondary btn-sm">Back</a>
             </div>
         </div>
     </div>

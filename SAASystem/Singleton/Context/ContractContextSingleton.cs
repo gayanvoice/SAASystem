@@ -54,6 +54,16 @@ namespace SAASystem.Singleton
             return mySqlSingleton.Select<ContractContextModel>(query, param);
         }
 
+        public ContractContextModel SelectByUserId(int UserId)
+        {
+            MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;
+            string column = nameof(UserId);
+            string value = UserId.ToString();
+            string query = QueryHelper.GetSelectQuery(tableName, column);
+            object param = new { UserId = value };
+            return mySqlSingleton.Select<ContractContextModel>(query, param);
+        }
+
         public IEnumerable<ContractContextModel> SelectAll()
         {
             MySqlSingleton mySqlSingleton = MySqlSingleton.Instance;

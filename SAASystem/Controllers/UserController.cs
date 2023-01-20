@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
+using SAASystem.Enum;
 using SAASystem.Helper;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
@@ -11,9 +12,25 @@ namespace SAASystem.Controllers
     {
         public IActionResult Index()
         {
-            UserViewModel.IndexViewModel viewModel = new UserViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = UserHelper.GetItemComponentModels();
-            return View(viewModel);
+            string username = Request.Cookies[UserCookieEnum.A_SYSTEM_USERNAME.ToString()];
+            string role = Request.Cookies[UserCookieEnum.A_SYSTEM_ROLE.ToString()];
+            if (username is null || role is null)
+            {
+                return RedirectToAction("Index", "Home", new { Param = "NotLoggedIn" });
+            }
+            else
+            {
+                if (role.Equals(UserRoleEnum.MANAGER.ToString()))
+                {
+                    UserViewModel.IndexViewModel viewModel = new UserViewModel.IndexViewModel();
+                    viewModel.ItemComponentModelEnumerable = UserHelper.GetItemComponentModels();
+                    return View(viewModel);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home", new { Param = "UnauthorizedAccess" });
+                }
+            }
         }
         public IActionResult List(string param)
         {
@@ -48,7 +65,7 @@ namespace SAASystem.Controllers
             {
                 UserViewModel.EditViewModel editViewModel = new UserViewModel.EditViewModel();
                 editViewModel.Form = UserViewModel.EditViewModel.FormViewModel.FromContextModel(contextModel);
-                return View(editViewModel);
+                return View(UserHelper.GenerateView(editViewModel));
             }
         }
         [HttpPost]
@@ -56,7 +73,7 @@ namespace SAASystem.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(editViewModel);
+                return View(UserHelper.GenerateView(editViewModel));
             }
             UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
             UserBuilder builder = new UserBuilder();
@@ -69,6 +86,8 @@ namespace SAASystem.Controllers
                 .SetSurname(editViewModel.Form.Surname)
                 .SetGivenName(editViewModel.Form.GivenName)
                 .SetAddress(editViewModel.Form.Address)
+                .SetRoleId(editViewModel.Form.RoleId)
+                .SetStatus(editViewModel.Form.Status)
                 .Build();
             userContextSingleton.Update(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessEdit" });
@@ -77,14 +96,14 @@ namespace SAASystem.Controllers
         {
             UserViewModel.InsertViewModel insertViewModel = new UserViewModel.InsertViewModel();
             insertViewModel.Form = new UserViewModel.InsertViewModel.FormViewModel();
-            return View(insertViewModel);
+            return View(UserHelper.GenerateView(insertViewModel));
         }
         [HttpPost]
         public IActionResult Insert(UserViewModel.InsertViewModel insertViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(insertViewModel);
+                return View(UserHelper.GenerateView(insertViewModel));
             }
             UserContextSingleton userContextSingleton = UserContextSingleton.Instance;
             UserBuilder builder = new UserBuilder();
@@ -96,6 +115,8 @@ namespace SAASystem.Controllers
                 .SetSurname(insertViewModel.Form.Surname)
                 .SetGivenName(insertViewModel.Form.GivenName)
                 .SetAddress(insertViewModel.Form.Address)
+                .SetRoleId(insertViewModel.Form.RoleId)
+                .SetStatus(insertViewModel.Form.Status)
                 .Build();
             userContextSingleton.Insert(contextModel);
             return RedirectToAction(nameof(List), new { Param = "SuccessInsert" });

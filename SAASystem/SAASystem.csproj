@@ -9,4 +9,11 @@
     <PackageReference Include="MySqlConnector" Version="2.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Home\Student.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

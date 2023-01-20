@@ -30,13 +30,13 @@ namespace SAASystem.Models.View
                 public string Name { get; set; }
 
                 [Display(Name = "Cpw")]
-                public double Cpw { get; set; }
+                public string Cpw { get; set; }
 
                 [Display(Name = "Size")]
-                public double Size { get; set; }
+                public string Size { get; set; }
 
                 [Display(Name = "Security Deposit")]
-                public double SecurityDeposit { get; set; }
+                public string SecurityDeposit { get; set; }
 
                 [Display(Name = "Days Available")]
                 public int DaysAvailable { get; set; }
@@ -53,9 +53,9 @@ namespace SAASystem.Models.View
                     FormViewModel formViewModel = new FormViewModel();
                     formViewModel.SuiteId = contextModel.SuiteId;
                     formViewModel.Name = contextModel.Name;
-                    formViewModel.Cpw = contextModel.Cpw;
-                    formViewModel.Size = contextModel.Size;
-                    formViewModel.SecurityDeposit = contextModel.SecurityDeposit;
+                    formViewModel.Cpw = $"£ {contextModel.Cpw}";
+                    formViewModel.Size = $"{contextModel.Size} Sq. M";
+                    formViewModel.SecurityDeposit = $"£ {contextModel.SecurityDeposit}";
                     formViewModel.DaysAvailable = contextModel.DaysAvailable;
                     formViewModel.MaximumStay = contextModel.MaximumStay;
                     formViewModel.Status = contextModel.Status;

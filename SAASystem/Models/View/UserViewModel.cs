@@ -1,4 +1,5 @@
-﻿using SAASystem.Models.Component;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SAASystem.Models.Component;
 using SAASystem.Models.Context;
 using SAASystem.Singleton;
 using System.Collections.Generic;
@@ -48,9 +49,11 @@ namespace SAASystem.Models.View
                 [Display(Name = "Given Name")]
                 public string GivenName { get; set; }
 
-
                 [Display(Name = "Address")]
                 public string Address { get; set; }
+
+                [Display(Name = "Status")]
+                public string Status { get; set; }
 
                 public static FormViewModel FromContextModel(
                     UserContextModel contextModel)
@@ -65,6 +68,7 @@ namespace SAASystem.Models.View
                     formViewModel.Surname = contextModel.Surname;
                     formViewModel.GivenName = contextModel.GivenName;
                     formViewModel.Address = contextModel.Address;
+                    formViewModel.Status = contextModel.Status;
                     return formViewModel;
                 }
             }
@@ -80,6 +84,8 @@ namespace SAASystem.Models.View
         }
         public class EditViewModel
         {
+            public IEnumerable<SelectListItem> RoleEnumerable { get; set; }
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -127,6 +133,10 @@ namespace SAASystem.Models.View
                 [Display(Name = "Address")]
                 public string Address { get; set; }
 
+                [Required]
+                [Display(Name = "Status")]
+                public string Status { get; set; }
+
                 public static FormViewModel FromContextModel(
                     UserContextModel contextModel)
                 {
@@ -140,12 +150,15 @@ namespace SAASystem.Models.View
                     formViewModel.Surname = contextModel.Surname;
                     formViewModel.GivenName = contextModel.GivenName;
                     formViewModel.Address = contextModel.Address;
+                    formViewModel.Status = contextModel.Status;
                     return formViewModel;
                 }
             }
         }
         public class InsertViewModel
         {
+            public IEnumerable<SelectListItem> RoleEnumerable { get; set; }
+            public IEnumerable<SelectListItem> StatusEnumerable { get; set; }
             public FormViewModel Form { get; set; }
             public class FormViewModel
             {
@@ -187,6 +200,10 @@ namespace SAASystem.Models.View
                 [StringLength(120)]
                 [Display(Name = "Address")]
                 public string Address { get; set; }
+
+                [Required]
+                [Display(Name = "Status")]
+                public string Status { get; set; }
             }
         }
     }

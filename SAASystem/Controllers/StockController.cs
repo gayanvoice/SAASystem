@@ -13,9 +13,25 @@ namespace SAASystem.Controllers
     {
         public IActionResult Index()
         {
-            StockViewModel.IndexViewModel viewModel = new StockViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = StockHelper.GetItemComponentModels();
-            return View(viewModel);
+            string username = Request.Cookies[UserCookieEnum.A_SYSTEM_USERNAME.ToString()];
+            string role = Request.Cookies[UserCookieEnum.A_SYSTEM_ROLE.ToString()];
+            if (username is null || role is null)
+            {
+                return RedirectToAction("Index", "Home", new { Param = "NotLoggedIn" });
+            }
+            else
+            {
+                if (role.Equals(UserRoleEnum.STAFF.ToString()))
+                {
+                    StockViewModel.IndexViewModel viewModel = new StockViewModel.IndexViewModel();
+                    viewModel.ItemComponentModelEnumerable = StockHelper.GetItemComponentModels();
+                    return View(viewModel);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home", new { Param = "UnauthorizedAccess" });
+                }
+            }
         }
         public IActionResult List(string param)
         {

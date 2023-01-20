@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SAASystem.Builder;
+using SAASystem.Enum;
 using SAASystem.Helper;
 using SAASystem.Models.Context;
 using SAASystem.Models.View;
 using SAASystem.Singleton;
+using static SAASystem.Models.View.ApartmentViewModel;
 
 namespace SAASystem.Controllers
 {
@@ -11,14 +13,30 @@ namespace SAASystem.Controllers
     {
         public IActionResult Index()
         {
-            ApartmentViewModel.IndexViewModel viewModel = new ApartmentViewModel.IndexViewModel();
-            viewModel.ItemComponentModelEnumerable = ApartmentHelper.GetItemComponentModels();
-            return View(viewModel);
+            string username = Request.Cookies[UserCookieEnum.A_SYSTEM_USERNAME.ToString()];
+            string role = Request.Cookies[UserCookieEnum.A_SYSTEM_ROLE.ToString()];
+            if (username is null || role is null)
+            {
+                return RedirectToAction("Index", "Home", new { Param = "NotLoggedIn" });
+            }
+            else
+            {
+                if (role.Equals(UserRoleEnum.STAFF.ToString()))
+                {
+                    IndexViewModel viewModel = new IndexViewModel();
+                    viewModel.ItemComponentModelEnumerable = ApartmentHelper.GetItemComponentModels();
+                    return View(viewModel);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home", new { Param = "UnauthorizedAccess" });
+                }
+            }
         }
         public IActionResult List(string param)
         {
             ApartmentContextSingleton apartmentContextSingleton = ApartmentContextSingleton.Instance;
-            ApartmentViewModel.ListViewModel list = new ApartmentViewModel.ListViewModel();
+            ListViewModel list = new ApartmentViewModel.ListViewModel();
             list.Status = param;
             list.ApartmentContextModelEnumerable = apartmentContextSingleton.SelectAll();
             return View(list);
